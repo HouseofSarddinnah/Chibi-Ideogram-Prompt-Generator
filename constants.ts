@@ -1,5 +1,4 @@
-
-import { FormData, Option } from './types';
+import { FormData, Option, ColorPalette } from './types';
 
 export const initialFormData: FormData = {
   outfitCategory: 'Detailed Outfit',
@@ -17,13 +16,17 @@ export const initialFormData: FormData = {
   hairColor: 'jet black',
   hairDescription: 'long flowing',
   hairHighlights: 'none',
+  hairAccessory: 'none',
   outfitStyle: 'glamorous party dress',
+  outfitColor: 'none',
   topDescription: 'sparkly crop top',
   bottomDescription: 'mini skirt with tulle',
   indianOutfit: 'elegant sari',
-  headwear: 'sparkly tiara',
-  plannerCategory: 'Self-Care & Wellness',
-  plannerPropCombination: 'candle_tea_mug',
+  headwear: 'none',
+  plannerCategory: 'PRODUCTIVITY & ORGANIZATION',
+  plannerType: 'productivity_planner',
+  plannerPalette: 'main',
+  plannerPropCombination: 'laptop_planner',
   layeredOuterwear: 'elegant trench coat',
   layeredTop: 'cozy knitted sweater',
   layeredScarf: 'knitted scarf',
@@ -32,13 +35,33 @@ export const initialFormData: FormData = {
   gownStyle: 'elegant ballgown',
   themedCostume: 'magical fairy',
   summerOutfit: 'boho chic sundress',
-  christmasOutfit: 'ugly Christmas sweater outfit',
+  christmasOutfit: 'cozy Christmas pajama set',
   valentinesOutfit: 'romantic cocktail dress',
+  chicAutumnOutfit: 'knit_leather_combo',
+  chicWinterOutfit: 'leather_shearling_combo',
+  chicStreetStyle: 'plaid_coat_turtleneck',
+  freckles: 'none',
+  jewelry: 'none',
   extraDescription: '',
   style: 'semi-realistic airbrushed',
   sceneDescription: 'a soft-focus enchanted garden backdrop',
   lightingDescription: 'soft rainbow glow',
 };
+
+export const SKIN_TONES_BY_ETHNICITY: { [key: string]: string[] } = {
+  'European': ['porcelain', 'ivory', 'alabaster', 'pearl white', 'snow white', 'cream', 'fair-skinned', 'pale rose', 'milky white', 'moonlight pale', 'light peach', 'soft pink', 'peachy cream', 'vanilla', 'light beige', 'champagne', 'light sand', 'pale gold', 'light honey', 'soft yellow', 'warm beige', 'light olive', 'peachy beige', 'golden beige', 'warm sand', 'cool ivory', 'cool beige', 'neutral ivory', 'neutral beige'],
+  'East Asian': ['ivory', 'light peach', 'soft yellow', 'light beige', 'peachy cream', 'vanilla', 'warm ivory', 'neutral ivory', 'porcelain', 'cream'],
+  'South Asian': ['golden beige', 'warm sand', 'light caramel', 'honey wheat', 'warm ivory', 'light bronze', 'golden cream', 'golden tan', 'warm tan', 'medium beige', 'caramel', 'honey brown', 'medium olive', 'warm bronze', 'golden brown', 'amber', 'toffee', 'butterscotch'],
+  'Indian': ['golden tan', 'warm tan', 'medium beige', 'caramel', 'honey brown', 'medium olive', 'warm bronze', 'golden brown', 'amber', 'toffee', 'butterscotch', 'deep caramel', 'rich bronze', 'warm copper', 'medium brown', 'chestnut', 'mahogany', 'deep olive', 'coffee brown', 'cocoa'],
+  'Latina': ['light olive', 'peachy beige', 'golden beige', 'warm sand', 'light caramel', 'honey wheat', 'golden tan', 'warm tan', 'medium beige', 'caramel', 'honey brown', 'medium olive', 'warm bronze', 'golden brown', 'amber', 'toffee', 'sun-kissed'],
+  'Middle Eastern': ['light olive', 'warm beige', 'golden beige', 'warm sand', 'medium beige', 'caramel', 'honey brown', 'medium olive', 'warm bronze', 'golden brown', 'amber'],
+  'African': ['caramel', 'honey brown', 'medium olive', 'warm bronze', 'golden brown', 'amber', 'medium sand', 'toffee', 'butterscotch', 'deep caramel', 'rich bronze', 'warm copper', 'medium brown', 'chestnut', 'mahogany', 'deep olive', 'coffee brown', 'cocoa', 'mocha', 'cinnamon', 'russet', 'deep brown', 'dark chocolate', 'espresso', 'dark bronze', 'deep copper', 'dark caramel', 'burnt sienna', 'dark amber', 'deep mahogany', 'rich cocoa', 'dark mocha', 'deep chestnut', 'rich ebony', 'deep ebony', 'dark ebony', 'midnight brown', 'obsidian', 'onyx', 'jet black', 'deep espresso', 'rich chocolate', 'dark coffee', 'blackberry', 'deep umber'],
+  'African American': ['caramel', 'honey brown', 'warm bronze', 'golden brown', 'toffee', 'deep caramel', 'rich bronze', 'warm copper', 'medium brown', 'chestnut', 'mahogany', 'coffee brown', 'cocoa', 'mocha', 'cinnamon', 'deep brown', 'dark chocolate', 'espresso', 'rich cocoa', 'dark mocha', 'rich ebony', 'deep ebony', 'obsidian', 'onyx'],
+  'Pacific Islander': ['golden tan', 'warm tan', 'caramel', 'honey brown', 'warm bronze', 'golden brown', 'amber', 'toffee', 'sun-kissed'],
+  'Native American': ['warm beige', 'light caramel', 'warm tan', 'medium beige', 'warm bronze', 'golden brown', 'amber', 'copper undertone', 'red undertone'],
+  'Mixed heritage': ['peachy beige', 'golden beige', 'light caramel', 'honey wheat', 'warm ivory', 'light bronze', 'golden cream', 'golden tan', 'warm tan', 'medium beige', 'caramel', 'honey brown', 'medium olive', 'warm bronze', 'golden brown', 'amber', 'toffee', 'butterscotch', 'deep caramel', 'rich bronze', 'warm copper', 'medium brown', 'chestnut', 'mahogany'],
+};
+
 
 export const PLANNER_PROPS: { [key: string]: Option[] } = {
   'Self-Care & Wellness': [
@@ -164,9 +187,134 @@ export const PLANNER_PROPS: { [key: string]: Option[] } = {
   ]
 };
 
+export const PLANNER_THEMES: { [key: string]: { label: string, value: string, outfit: string, aesthetic: string, prop: string }[] } = {
+  'PRODUCTIVITY & ORGANIZATION': [
+    { label: 'Productivity Planner', value: 'productivity_planner', outfit: 'a beige blazer, white shirt, high-waist trousers, and nude heels', aesthetic: 'Boss babe minimal chic', prop: 'laptop_planner' },
+    { label: '2025 Life Planner', value: 'life_planner_2025', outfit: 'a cream turtleneck, plaid skirt, and brown boots', aesthetic: 'Cozy classic', prop: 'calendar_sticky_notes' },
+    { label: 'Brain Dump Planner', value: 'brain_dump_planner', outfit: 'an oversized hoodie, messy bun, pastel joggers, and glasses', aesthetic: 'Creative comfy', prop: 'journal_diffuser' },
+    { label: 'Goal Planner / Time Boxing', value: 'goal_planner', outfit: 'a smart-casual set with a button-up shirt, black leggings, and sneakers', aesthetic: 'Clean & focused', prop: 'todo_list_pen' },
+    { label: 'Bright Personal Planner', value: 'bright_personal_planner', outfit: 'a neon blazer, statement earrings, and color-block pants', aesthetic: 'Bold & vibrant energy', prop: 'calendar_sticky_notes' },
+  ],
+  'READING & STUDY': [
+    { label: 'Reading Planner / Journal', value: 'reading_planner', outfit: 'a knit cardigan, denim jeans, glasses, and cozy socks', aesthetic: 'Bookish cottagecore', prop: 'book_highlighter' },
+    { label: 'Student Academic Planner', value: 'student_planner', outfit: 'a graphic tee, plaid skirt, and backpack', aesthetic: 'Preppy schoolcore', prop: 'notebook_highlighter' },
+    { label: 'Study Planner', value: 'study_planner', outfit: 'a sweater vest, button-down shirt, and pleated skirt', aesthetic: 'Academic chic', prop: 'stack_of_books_pencil' },
+    { label: 'Photography Planner', value: 'photography_planner', outfit: 'a denim jacket, cargo pants, with a camera strap worn crossbody', aesthetic: 'Creative urban casual', prop: 'microphone_camera' },
+  ],
+  'BUSINESS & CONTENT CREATION': [
+    { label: 'Small Business Planner', value: 'small_business_planner', outfit: 'a blazer over a tank top, mom jeans, and loafers', aesthetic: 'Entrepreneur casual', prop: 'business_cards_pen' },
+    { label: 'Blog Post Planner', value: 'blog_planner', outfit: 'a ruffle blouse, white jeans, and ballet flats', aesthetic: 'Feminine content creator', prop: 'laptop_coffee_mug' },
+    { label: 'Branding Planner (Pink)', value: 'branding_planner', outfit: 'a pink power suit with pearl accessories', aesthetic: 'Boss babe aesthetic', prop: 'tablet_stylus' },
+    { label: 'TikTok Planner', value: 'tiktok_planner', outfit: 'an oversized tee, biker shorts, and chunky sneakers', aesthetic: 'TikTok platform vibe', prop: 'phone_ring_light' },
+    { label: 'Instagram Planner', value: 'instagram_planner', outfit: 'a floral mini dress with a statement bag', aesthetic: 'Instagram platform vibe', prop: 'phone_ring_light' },
+    { label: 'Pinterest Planner', value: 'pinterest_planner', outfit: 'a neutral linen set with gold jewelry', aesthetic: 'Pinterest platform vibe', prop: 'tablet_stylus' },
+    { label: 'YouTube Planner', value: 'youtube_planner', outfit: 'a comfy hoodie, joggers, and headphones', aesthetic: 'YouTube platform vibe', prop: 'microphone_camera' },
+  ],
+  'SELF-CARE, HEALTH & WELLNESS': [
+    { label: 'Self Care / Love Journal', value: 'self_care_journal', outfit: 'a silk robe, fluffy slippers, and a headband', aesthetic: 'Soft girl cozy', prop: 'journal_diffuser' },
+    { label: 'Wellness Planner', value: 'wellness_planner', outfit: 'a yoga set, zip-up jacket, and a water bottle', aesthetic: 'Health glow aesthetic', prop: 'yoga_mat_water_bottle' },
+    { label: 'Habit Tracker', value: 'habit_tracker', outfit: 'a lounge set, scrunchie, and pastel socks', aesthetic: 'Simple clean girl', prop: 'todo_list_pen' },
+    { label: 'Fitness & Meal Planner', value: 'fitness_meal_planner', outfit: 'a sports bra, matching leggings, and sneakers', aesthetic: 'Gymcore', prop: 'dumbbell_smoothie' },
+    { label: '75-Day Challenge Journal', value: 'challenge_75_day_journal', outfit: 'a cropped tee, biker shorts, and a fitness band', aesthetic: 'Athletic motivation', prop: 'jump_rope_stopwatch' },
+    { label: 'Mood Tracker Journal', value: 'mood_tracker_journal', outfit: 'a gradient hoodie, pastel nails, and sneakers', aesthetic: 'Vibrant pastelcore', prop: 'journal_diffuser' },
+    { label: 'Dream Journal', value: 'dream_journal', outfit: 'satin pajamas, a moon necklace, and slippers', aesthetic: 'Dreamy celestial vibe', prop: 'journal_diffuser' },
+  ],
+  'SPIRITUAL & MANIFESTATION': [
+    { label: 'Law of Attraction / Manifestation Journal', value: 'manifestation_journal', outfit: 'a boho kimono, layered crystals, and soft pants', aesthetic: 'Manifestation boho', prop: 'crystal_palo_santo' },
+    { label: 'Tarot Journal', value: 'tarot_journal', outfit: 'a velvet top, moon pendant, and a long skirt', aesthetic: 'Mystic witchy', prop: 'crystal_palo_santo' },
+    { label: 'Vision Board Planner', value: 'vision_board_planner', outfit: 'a graphic tee that says "Dream Big", a jean jacket, and sneakers', aesthetic: 'Creative dreamer vibe', prop: 'journal_diffuser' },
+  ],
+  'LIFE & FAMILY': [
+    { label: 'Ultimate Mum Planner', value: 'mum_planner', outfit: 'comfy jeans, a cozy sweater, and sneakers', aesthetic: 'Casual mom chic', prop: 'calendar_pen' },
+    { label: 'Baby Book Template', value: 'baby_book', outfit: 'a pastel knit top, maxi skirt, in soft colors', aesthetic: 'Gentle nurturing', prop: 'baby_bottle_diaper_bag' },
+    { label: 'Wedding / Bridal Planner', value: 'wedding_planner', outfit: 'a white dress with lace details and pearl jewelry', aesthetic: 'Romantic elegance', prop: 'ring_box_planner' },
+    { label: 'Thanksgiving Planner', value: 'thanksgiving_planner', outfit: 'a rust sweater, corduroy skirt, and ankle boots', aesthetic: 'Warm autumn cozy', prop: 'recipe_book_spoon' },
+    { label: 'Pet Planner', value: 'pet_planner', outfit: 'a paw print sweatshirt, joggers, and sneakers', aesthetic: 'Cute cozy pet lover', prop: 'notebook_highlighter' },
+  ],
+  'TRAVEL & LIFESTYLE': [
+    { label: 'Travel Planner', value: 'travel_planner', outfit: 'a linen two-piece set, a wide hat, and a crossbody bag', aesthetic: 'Jetsetter chic', prop: 'suitcase_passport' },
+    { label: 'Dream Life Planner', value: 'dream_life_planner', outfit: 'a flowing white dress, sandals, and minimal jewelry', aesthetic: 'Boho dreamcore', prop: 'journal_diffuser' },
+  ],
+  'MONEY & BUSINESS TRACKING': [
+    { label: 'Budget / Finance Planner', value: 'budget_planner', outfit: 'a business casual look, smart watch, and glasses', aesthetic: 'Organized pro aesthetic', prop: 'calculator_dollar_bills' },
+    { label: 'Small Business / Branding Planner', value: 'small_business_branding_planner', outfit: 'a pink blazer, heels, with an iPad in hand', aesthetic: 'Entrepreneur glam', prop: 'business_cards_pen' },
+  ],
+  'FAITH & MINDFULNESS': [
+    { label: 'Bible Study / Gratitude Journal', value: 'bible_study_journal', outfit: 'a flowy neutral dress, scarf, and sandals', aesthetic: 'Calm spiritual', prop: 'bible_prayer_journal' },
+    { label: 'Wellness & Self-Care Inserts', value: 'wellness_inserts', outfit: 'a light cotton robe, slipper socks, with a journal and pen', aesthetic: 'Minimal zen', prop: 'journal_diffuser' },
+    { label: 'Gratitude Journal', value: 'gratitude_journal', outfit: 'a knit sweater, midi skirt, in warm tones', aesthetic: 'Calm & thankful aesthetic', prop: 'gratitude_jar_pen' },
+  ],
+};
+
+export const PLANNER_COLOR_PALETTES: { [key: string]: { [key: string]: string[] } } = {
+  'PRODUCTIVITY & ORGANIZATION': {
+    main: ['Blush Pink #F8D7DA', 'Mint #C8E6C9', 'Lavender #E6E6FA', 'Ivory #FFF8E7', 'Soft Gray #D3D3D3', 'Gold #D4AF37'],
+    winter: ['Cream #F9F6EE', 'Taupe #B2A89F', 'Dusty Rose #D6A5A5', 'Silver #C0C0C0'],
+    spring: ['Peach #FFDAB9', 'Mint #B8E3C0', 'Lavender #E6E6FA', 'Sky Blue #B0E0E6'],
+    summer: ['Coral #F88379', 'Pastel Teal #B2DFDB', 'Sand #F4E7C2'],
+    autumn: ['Rust #B7410E', 'Caramel #C68E17', 'Olive #708238', 'Mustard #E1AD01'],
+  },
+  'READING & STUDY': {
+    main: ['Dusty Rose #DCAE96', 'Sage Green #A8BCA1', 'Cream #FFF5E1', 'Soft Brown #C4A484', 'Powder Blue #B0C4DE'],
+    winter: ['Burgundy #800020', 'Navy #001F3F', 'Cream #FAF3E0'],
+    spring: ['Pale Pink #F4C2C2', 'Lemon #FFFACD', 'Lilac #E3BEE3'],
+    summer: ['Sky Blue #87CEEB', 'Ivory #FFFFF0', 'Tan #D2B48C'],
+    autumn: ['Amber #FFBF00', 'Olive #808000', 'Burnt Orange #CC5500'],
+  },
+  'BUSINESS & CONTENT CREATION': {
+    main: ['Blush #FADADD', 'Ivory #FFF8E7', 'Beige #F5F5DC', 'Gold #D4AF37', 'Soft Gray #C0C0C0', 'Black #000000'],
+    winter: ['Charcoal #36454F', 'Silver #C0C0C0', 'Nude #EADAC1'],
+    spring: ['Mint #98FF98', 'Coral #FF7F50', 'Ivory #FFFFF0'],
+    summer: ['Peach #FFE5B4', 'Beige #EEDC82', 'Gold #FFD700'],
+    autumn: ['Mauve #E0B0FF', 'Cocoa #7B3F00', 'Dusty Rose #C9A9A6'],
+  },
+  'SELF-CARE, HEALTH & WELLNESS': {
+    main: ['Lavender #E6E6FA', 'Blush #FADADD', 'Sage #C1CFA1', 'Soft Aqua #B2DFDB', 'White #FFFFFF', 'Pale Gold #E6BE8A'],
+    winter: ['Lilac #B666D2', 'Icy Blue #B0E0E6', 'Pearl #F8F6F0', 'Silver #C0C0C0'],
+    spring: ['Mint #C8E6C9', 'Lemon #FFFACD', 'White #FFFFFF'],
+    summer: ['Coral #F88379', 'Sky Blue #87CEEB', 'Cream #FFFDD0'],
+    autumn: ['Terracotta #E2725B', 'Mauve #E0B0FF', 'Olive #708238'],
+  },
+  'SPIRITUAL & MANIFESTATION': {
+    main: ['Lilac #C8A2C8', 'Celestial Blue #6CB4EE', 'Gold #FFD700', 'Silver #C0C0C0', 'Midnight Navy #191970', 'Rose Quartz #F7CAC9'],
+    winter: ['Deep Violet #9400D3', 'Indigo #4B0082', 'Silver #C0C0C0'],
+    spring: ['Soft Lavender #E6E6FA', 'Pale Yellow #FFFACD', 'Gold #FFD700'],
+    summer: ['Pastel Purple #D8BFD8', 'White #FFFFFF', 'Aqua #00FFFF'],
+    autumn: ['Plum #8E4585', 'Bronze #CD7F32', 'Copper #B87333'],
+  },
+  'LIFE & FAMILY': {
+    main: ['Baby Pink #FFC0CB', 'Mint #BDFCC9', 'Peach #FFDAB9', 'Cream #FFFDD0', 'Sky Blue #87CEEB', 'Lavender #E6E6FA'],
+    winter: ['Powder Blue #B0E0E6', 'Gray #D3D3D3', 'Soft Pink #F4C2C2'],
+    spring: ['Peach #FFDAB9', 'Mint #98FF98', 'Lilac #E3BEE3'],
+    summer: ['Coral #FF7F50', 'Ivory #FFFFF0', 'Aqua #00FFFF'],
+    autumn: ['Beige #F5F5DC', 'Brown #8B4513', 'Moss #8A9A5B'],
+  },
+  'TRAVEL & LIFESTYLE': {
+    main: ['Sand Beige #F4E7C2', 'Turquoise #40E0D0', 'Coral #FF7F50', 'Sky Blue #87CEEB', 'Golden Yellow #FFD700'],
+    winter: ['Navy #001F3F', 'Icy Teal #AEEEEE', 'Silver #C0C0C0'],
+    spring: ['Mint #98FF98', 'Coral #F88379', 'Blush #FADADD'],
+    summer: ['Sunset Orange #FD5E53', 'Ocean Blue #1E90FF', 'Sand #F4E7C2'],
+    autumn: ['Terracotta #E2725B', 'Mustard #E1AD01', 'Olive #708238'],
+  },
+  'MONEY & BUSINESS TRACKING': {
+    main: ['Beige #F5F5DC', 'Ivory #FFF8E7', 'Soft Mint #B8E3C0', 'Gray #D3D3D3', 'Gold #D4AF37', 'White #FFFFFF'],
+    winter: ['Charcoal #36454F', 'Frost Blue #B0E0E6', 'Pearl #F8F6F0'],
+    spring: ['Mint #98FF98', 'Blush #F4C2C2', 'Gold #FFD700'],
+    summer: ['Beige #EEDC82', 'Coral #FF7F50', 'Sage #A8BCA1'],
+    autumn: ['Camel #C19A6B', 'Olive #708238', 'Warm Gray #BEBEBE'],
+  },
+   'FAITH & MINDFULNESS': {
+    main: ['Lavender #E6E6FA', 'Blush #FADADD', 'Sage #C1CFA1', 'Soft Aqua #B2DFDB', 'White #FFFFFF', 'Pale Gold #E6BE8A'],
+    winter: ['Lilac #B666D2', 'Icy Blue #B0E0E6', 'Pearl #F8F6F0', 'Silver #C0C0C0'],
+    spring: ['Mint #C8E6C9', 'Lemon #FFFACD', 'White #FFFFFF'],
+    summer: ['Coral #F88379', 'Sky Blue #87CEEB', 'Cream #FFFDD0'],
+    autumn: ['Terracotta #E2725B', 'Mauve #E0B0FF', 'Olive #708238'],
+  }
+};
+
 
 export const WORD_BANK: { [K in keyof FormData]?: string[] } = {
-  outfitCategory: ['Detailed Outfit', 'Indian Outfit', 'Formal Gown', 'Themed Costume', 'Winter Wear', 'Autumn Wear', 'Summer Outfit', 'Christmas Outfit', 'Valentines Outfit', 'Planner Outfit'],
+  outfitCategory: ['Detailed Outfit', 'Indian Outfit', 'Formal Gown', 'Themed Costume', 'Winter Wear', 'Chic Winter Outfit', 'Chic Street Style', 'Autumn Wear', 'Chic Autumn Outfit', 'Summer Outfit', 'Christmas Outfit', 'Valentines Outfit', 'Planner Outfit'],
   skinTone: ['porcelain', 'ivory', 'alabaster', 'pearl white', 'snow white', 'cream', 'fair-skinned', 'pale rose', 'milky white', 'moonlight pale', 'light peach', 'soft pink', 'peachy cream', 'vanilla', 'light beige', 'champagne', 'light sand', 'pale gold', 'light honey', 'soft yellow', 'warm beige', 'light olive', 'peachy beige', 'golden beige', 'warm sand', 'light caramel', 'honey wheat', 'warm ivory', 'light bronze', 'golden cream', 'golden tan', 'warm tan', 'medium beige', 'caramel', 'honey brown', 'medium olive', 'warm bronze', 'golden brown', 'amber', 'medium sand', 'toffee', 'butterscotch', 'deep caramel', 'rich bronze', 'warm copper', 'medium brown', 'chestnut', 'mahogany', 'deep olive', 'coffee brown', 'cocoa', 'mocha', 'cinnamon', 'russet', 'deep brown', 'dark chocolate', 'espresso', 'dark bronze', 'deep copper', 'dark caramel', 'burnt sienna', 'dark amber', 'deep mahogany', 'rich cocoa', 'dark mocha', 'deep chestnut', 'rich ebony', 'deep ebony', 'dark ebony', 'midnight brown', 'obsidian', 'onyx', 'jet black', 'deep espresso', 'rich chocolate', 'dark coffee', 'blackberry', 'deep umber', 'cool ivory', 'cool beige', 'cool sand', 'cool brown', 'ash brown', 'cool olive', 'cool bronze', 'cool ebony', 'steel gray undertone', 'cool chocolate', 'warm ivory', 'warm cream', 'warm peach', 'warm honey', 'warm caramel', 'warm mahogany', 'warm ebony', 'golden undertone', 'copper undertone', 'red undertone', 'neutral ivory', 'neutral beige', 'neutral tan', 'neutral brown', 'neutral olive', 'neutral bronze', 'neutral ebony', 'balanced undertone', 'true beige', 'natural brown', 'golden goddess', 'bronze beauty', 'caramel queen', 'chocolate princess', 'ebony empress', 'honey glow', 'sun-kissed', 'radiant bronze', 'luminous brown', 'glowing ebony', 'moonlit silver', 'golden shimmer', 'rose gold glow', 'pearl luminescence', 'bronze metallic', 'copper shine', 'ethereal glow', 'celestial radiance', 'divine luminosity', 'angelic shimmer'],
   ethnicity: ['European', 'East Asian', 'South Asian', 'Indian', 'Latina', 'Middle Eastern', 'African', 'African American', 'Pacific Islander', 'Native American', 'Mixed heritage'],
   age: ['18', '20', '22', '25', '28', '30', '35', '40', '45', '50', '55', '60'],
@@ -181,17 +329,24 @@ export const WORD_BANK: { [K in keyof FormData]?: string[] } = {
   hairColor: ['jet black', 'dark brown', 'chocolate brown', 'chestnut brown', 'auburn brown', 'honey brown', 'caramel brown', 'light brown', 'ash brown', 'copper red', 'burgundy red', 'cherry red', 'strawberry blonde', 'dirty blonde', 'honey blonde', 'golden blonde', 'ash blonde', 'platinum blonde', 'white blonde', 'silver gray', 'charcoal gray', 'salt and pepper', 'cotton candy pink', 'bubblegum pink', 'hot pink', 'magenta pink', 'rose pink', 'coral pink', 'pastel pink', 'neon pink', 'lavender purple', 'violet purple', 'royal purple', 'deep purple', 'plum purple', 'amethyst purple', 'lilac purple', 'periwinkle purple', 'sky blue', 'ocean blue', 'navy blue', 'electric blue', 'teal blue', 'turquoise blue', 'powder blue', 'midnight blue', 'mint green', 'forest green', 'emerald green', 'lime green', 'sage green', 'seafoam green', 'neon green', 'olive green', 'rose gold', 'champagne gold', 'bronze gold', 'copper gold', 'metallic silver', 'chrome silver', 'pearl white', 'holographic silver', 'iridescent white', 'rainbow ombre', 'sunset ombre', 'ocean ombre', 'galaxy ombre', 'fire ombre', 'cotton candy ombre', 'mermaid ombre', 'unicorn ombre', 'pastel rainbow', 'neon rainbow', 'sunshine yellow', 'lemon yellow', 'golden yellow', 'neon yellow', 'tangerine orange', 'peach orange', 'coral orange', 'sunset orange', 'neon orange', 'galaxy swirl', 'stardust shimmer', 'aurora borealis', 'cosmic nebula', 'crystal prism', 'moonbeam silver', 'fairy dust', 'dragon fire', 'phoenix flame', 'mermaid scales', 'unicorn magic', 'witch\'s brew', 'raven black', 'midnight black', 'blood red', 'vampire red', 'gothic purple', 'shadow gray', 'storm cloud', 'electric violet', 'pastel peach', 'pastel coral', 'pastel lavender', 'pastel mint', 'pastel yellow', 'pastel blue', 'pastel purple', 'pastel green'],
   hairDescription: ['long flowing', 'twin pigtails', 'high ponytail', 'space buns', 'curly voluminous', 'straight with bangs', 'braided crown', 'messy bun', 'side swept', 'bob cut', 'pixie cut', 'beach waves', 'french braids', 'fishtail braid', 'half up half down', 'top knot', 'loose curls', 'straight sleek', 'asymmetrical cut', 'layered shag', 'victory rolls', 'bubble ponytail', 'dutch braids', 'crown braid', 'waterfall braid', 'twisted updo', 'finger waves', 'afro puffs', 'cornrows', 'box braids', 'locs', 'twist out', 'bantu knots', 'hime cut', 'wolf cut', 'curtain bangs', 'micro bangs', 'feathered layers', 'razor cut', 'undercut', 'mohawk', 'faux hawk', 'buzz cut', 'crew cut', 'pompadour', 'quiff', 'slicked back', 'man bun', 'fade cut', 'taper cut', 'textured crop', 'spiky', 'emo fringe', 'scene hair', 'gothic lolita curls', 'anime spikes', 'magical girl twintails', 'princess waves', 'fairy tale braids', 'cyberpunk mohawk', 'steampunk updo', 'vintage pin curls', 'retro beehive', '1920s finger waves', '1950s victory rolls', '1960s bouffant', '1970s feathered', '1980s big hair', '1990s face framing layers', '2000s chunky highlights', 'holographic flowing', 'galaxy swirls', 'rainbow cascade', 'crystal spikes', 'ethereal wisps', 'mermaid waves', 'unicorn mane', 'dragon scales texture', 'phoenix feathers', 'stardust curls'],
   hairHighlights: ['none', 'holographic silver', 'neon pink streaks', 'glittery gold', 'rainbow prism', 'electric blue tips', 'pearl white'],
-  outfitStyle: ['glamorous party dress', 'cocktail party outfit', 'red carpet gown', 'prom queen dress', 'ballroom gown', 'evening wear ensemble', 'gala dinner attire', 'awards show outfit', 'celebrity style dress', 'VIP lounge outfit', 'trendy streetwear', 'y2k street wear', 'casual chic outfit', 'modern chic outfit', 'urban fashion look', 'hipster style ensemble', 'boho chic outfit', 'indie fashion look', 'minimalist modern wear', 'athleisure outfit', 'weekend casual look', 'coffee shop chic', 'magical girl costume', 'fairy princess dress', 'anime cosplay outfit', 'fantasy warrior costume', 'mermaid inspired dress', 'unicorn themed outfit', 'dragon queen costume', 'celestial goddess dress', 'witch academy uniform', 'superhero costume', 'punk rock outfit', 'gothic lolita dress', 'emo style outfit', 'grunge fashion look', 'rockabilly dress', 'steampunk ensemble', 'cyberpunk outfit', 'vampire gothic dress', 'dark academia outfit', 'alternative fashion look', 'kawaii lolita dress', 'kawaii outfit', 'harajuku fashion outfit', 'decora kei style', 'fairy kei outfit', 'sweet lolita dress', 'classic lolita outfit', 'visual kei costume', 'maid cafe uniform', 'school uniform style', 'kimono inspired dress', 'futuristic cyber wear', 'space age outfit', 'holographic fashion', 'neon cyber dress', 'robot girl costume', 'alien princess dress', 'matrix style outfit', 'techno rave wear', 'digital avatar outfit', 'virtual reality costume', '1950s pin-up dress', '1960s mod outfit', '1970s disco dress', '1980s power suit', '1990s grunge look', '2000s y2k outfit', 'vintage hollywood glam', 'retro pinup style', 'art deco inspired dress', 'flapper girl costume', 'business professional', 'official business attire', 'office chic outfit', 'power suit ensemble', 'corporate fashion', 'executive style dress', 'conference outfit', 'interview attire', 'boardroom fashion', 'professional casual', 'smart business look', 'summer festival outfit', 'winter wonderland dress', 'spring garden party', 'autumn harvest look', 'christmas party dress', 'Christmas matching pajamas', 'halloween costume', 'valentine\'s day outfit', 'new year\'s eve dress', 'beach vacation wear', 'ski resort fashion', 'traditional cultural dress', 'festival celebration outfit', 'ceremonial costume', 'ethnic inspired fashion', 'cultural fusion outfit', 'traditional wedding dress', 'folk costume style', 'heritage fashion look', 'cultural celebration wear', 'traditional dance costume', 'athletic wear outfit', 'casual athletic wear', 'sporty chic outfit', 'yoga fashion look', 'gym chic ensemble', 'sports luxe outfit', 'dance practice wear', 'cheerleader uniform', 'tennis outfit', 'swimming costume', 'running gear look', 'fitness fashion outfit', 'avant-garde fashion', 'experimental outfit', 'artistic expression wear', 'conceptual fashion look', 'runway model outfit', 'fashion week ensemble', 'designer showcase dress', 'haute couture outfit', 'fashion editorial look', 'creative director style'],
+  hairAccessory: ['none', 'sparkly hair clips', 'pearl hair pins', 'a large satin bow', 'a velvet headband', 'a delicate floral hair comb', 'rhinestone barrettes', 'a silk scarf tied in her hair', 'glittery hair pins', 'a beaded headband', 'a celestial-themed hair charm', 'small decorative flowers tucked in her hair'],
+  outfitStyle: ['glamorous party dress', 'cocktail party outfit', 'red carpet gown', 'prom queen dress', 'ballroom gown', 'evening wear ensemble', 'gala dinner attire', 'awards show outfit', 'celebrity style dress', 'VIP lounge outfit', 'trendy streetwear', 'y2k street wear', 'casual chic outfit', 'modern chic outfit', 'urban fashion look', 'hipster style ensemble', 'boho chic outfit', 'indie fashion look', 'minimalist modern wear', 'athleisure outfit', 'weekend casual look', 'coffee shop chic', 'magical girl costume', 'fairy princess dress', 'anime cosplay outfit', 'fantasy warrior costume', 'mermaid inspired dress', 'unicorn themed outfit', 'dragon queen costume', 'celestial goddess dress', 'witch academy uniform', 'superhero costume', 'punk rock outfit', 'gothic lolita dress', 'emo style outfit', 'grunge fashion look', 'rockabilly dress', 'steampunk ensemble', 'cyberpunk outfit', 'vampire gothic dress', 'dark academia outfit', 'alternative fashion look', 'kawaii lolita dress', 'kawaii outfit', 'harajuku fashion outfit', 'decora kei style', 'fairy kei outfit', 'sweet lolita dress', 'classic lolita outfit', 'visual kei costume', 'maid cafe uniform', 'school uniform style', 'kimono inspired dress', 'futuristic cyber wear', 'space age outfit', 'holographic fashion', 'neon cyber dress', 'robot girl costume', 'alien princess dress', 'matrix style outfit', 'techno rave wear', 'digital avatar outfit', 'virtual reality costume', '1950s pin-up dress', '1960s mod outfit', '1970s disco dress', '1980s power suit', '1990s grunge look', '2000s y2k outfit', 'vintage hollywood glam', 'retro pinup style', 'art deco inspired dress', 'flapper girl costume', 'business professional', 'official business attire', 'office chic outfit', 'power suit ensemble', 'corporate fashion', 'executive style dress', 'conference outfit', 'interview attire', 'boardroom fashion', 'professional casual', 'smart business look', 'summer festival outfit', 'winter wonderland dress', 'spring garden party', 'autumn harvest look', 'christmas party dress', 'Christmas matching pajamas', 'halloween costume', 'valentine\'s day outfit', 'new year\'s eve dress', 'beach vacation wear', 'ski resort fashion', 'traditional cultural dress', 'festival celebration outfit', 'ceremonial costume', 'ethnic inspired fashion', 'cultural fusion outfit', 'traditional wedding dress', 'folk costume style', 'heritage fashion look', 'cultural celebration wear', 'traditional dance costume', 'athletic wear outfit', 'casual athletic wear', 'sporty chic outfit', 'yoga fashion look', 'gym chic ensemble', 'sports luxe outfit', 'dance practice wear', 'cheerleader uniform', 'tennis outfit', 'swimming costume', 'running gear look', 'fitness fashion outfit', 'avant-garde fashion', 'experimental outfit', 'artistic expression wear', 'conceptual fashion look', 'runway model outfit', 'fashion week ensemble', 'designer showcase dress', 'haute couture outfit', 'fashion editorial look', 'creative director style', 'Minimal Boss Babe', 'Soft Girl Cozy', 'Manifestation Boho', 'Academic Preppy', 'Serene Faithcore', 'Entrepreneur Chic', 'Wellness Glow', 'Creative Dreamer', 'Cozy Autumncore', 'Romantic Bridal', 'Jetsetter Traveler'],
+  outfitColor: ['none', 'red', 'blue', 'green', 'yellow', 'pink', 'purple', 'orange', 'black', 'white', 'gray', 'silver', 'gold', 'rose gold', 'champagne', 'ivory', 'cream', 'beige', 'brown', 'navy', 'royal blue', 'sky blue', 'baby blue', 'teal', 'turquoise', 'emerald green', 'lime green', 'forest green', 'olive green', 'mint green', 'maroon', 'burgundy', 'scarlet', 'crimson', 'ruby', 'fuchsia', 'magenta', 'hot pink', 'baby pink', 'lavender', 'violet', 'plum', 'lilac', 'periwinkle', 'indigo', 'coral', 'peach', 'apricot', 'tangerine', 'burnt orange', 'mustard yellow', 'lemon yellow', 'gold metallic', 'silver metallic', 'copper metallic', 'bronze metallic', 'holographic', 'iridescent', 'pastel pink', 'pastel blue', 'pastel green', 'pastel purple', 'pastel yellow'],
   topDescription: ['none', 'sparkly crop top', 'glittery crop top', 'metallic crop top', 'sequined crop top', 'holographic crop top', 'mesh crop top', 'lace crop top', 'velvet crop top', 'satin crop top', 'rhinestone crop top', 'bandeau crop top', 'tube crop top', 'wrap crop top', 'tie-front crop top', 'cut-out crop top', 'backless crop top', 'strappy crop top', 'caged crop top', 'sports bra style top', 'bralette top', 'off-shoulder blouse', 'cold shoulder blouse', 'one shoulder blouse', 'peasant blouse', 'peplum blouse', 'wrap blouse', 'tie-neck blouse', 'bow-tie blouse', 'ruffle blouse', 'lace blouse', 'sheer blouse', 'silk blouse', 'chiffon blouse', 'satin blouse', 'button-up shirt', 'oversized shirt', 'fitted shirt', 'cropped shirt', 'tied shirt', 'graphic tee', 'ruffled corset', 'lace-up corset', 'satin corset', 'velvet corset', 'leather corset', 'brocade corset', 'embroidered corset', 'rhinestone corset', 'steampunk corset', 'gothic corset', 'vintage corset', 'overbust corset', 'underbust corset', 'waist training corset', 'bustier top', 'strapless bustier', 'push-up bustier', 'sequined bustier', 'metallic bustier', 'embellished bustier', 'silk corset', 'taffeta corset', 'organza corset', 'tulle corset', 'chiffon corset', 'duchess satin corset', 'mikado corset', 'crepe corset', 'charmeuse corset', 'dupioni silk corset', 'jacquard corset', 'damask corset', 'brocatelle corset', 'tapestry corset', 'chenille corset', 'moire corset', 'faille corset', 'grosgrain corset', 'ottoman corset', 'bengaline corset', 'peau de soie corset', 'shantung corset', 'raw silk corset', 'habotai corset', 'georgette corset', 'crepe de chine corset', 'point d\'esprit corset', 'swiss dot corset', 'eyelet corset', 'broderie anglaise corset', 'cutwork corset', 'battenberg lace corset', 'venetian lace corset', 'chantilly lace corset', 'alencon lace corset', 'guipure lace corset', 're-embroidered lace corset', 'corded lace corset', 'scalloped lace corset', 'eyelash lace corset', 'floral lace corset', 'geometric lace corset', 'vintage lace corset', 'antique lace corset', 'heirloom lace corset', 'hand-tatted lace corset', 'bobbin lace corset', 'needle lace corset', 'filet lace corset', 'irish crochet corset', 'macrame corset', 'beaded corset', 'pearl beaded corset', 'crystal beaded corset', 'seed bead corset', 'bugle bead corset', 'sequin and bead corset', 'hand-beaded corset', 'vintage beaded corset', 'art deco beaded corset', 'flapper beaded corset', '1920s beaded corset', 'gatsby beaded corset', 'charleston beaded corset', 'prohibition era corset', 'roaring twenties corset', 'jazz age corset', 'speakeasy corset', 'cabaret corset', 'burlesque corset', 'showgirl corset', 'cancan corset', 'moulin rouge corset', 'parisian corset', 'french maid corset', 'victorian corset', 'edwardian corset', 'belle epoque corset', 'gibson girl corset', 's-curve corset', 'hourglass corset', 'tight-lacing corset', 'stays corset', 'bodice corset', 'basque corset', 'waspie corset', 'cincher corset', 'girdle corset', 'longline corset', 'shortline corset', 'mini corset', 'cropped corset', 'high-low corset', 'asymmetrical corset', 'wrap corset', 'halter corset', 'strapless corset', 'off-shoulder corset', 'one-shoulder corset', 'cold-shoulder corset', 'cap sleeve corset', 'short sleeve corset', 'long sleeve corset', 'bell sleeve corset', 'bishop sleeve corset', 'puff sleeve corset', 'juliet sleeve corset', 'renaissance sleeve corset', 'medieval corset', 'renaissance corset', 'baroque corset', 'rococo corset', 'regency corset', 'empire corset', 'romantic corset', 'crinoline corset', 'bustle corset', 'art nouveau corset', 'art deco corset', 'modernist corset', 'minimalist corset', 'maximalist corset', 'avant-garde corset', 'conceptual corset', 'architectural corset', 'sculptural corset', 'geometric corset', 'abstract corset', 'surreal corset', 'fantasy corset', 'fairy tale corset', 'princess corset', 'queen corset', 'empress corset', 'royal corset', 'noble corset', 'aristocratic corset', 'regal corset', 'majestic corset', 'imperial corset', 'ceremonial corset', 'formal corset', 'evening corset', 'cocktail corset', 'party corset', 'gala corset', 'red carpet corset', 'awards show corset', 'premiere corset', 'opening night corset', 'black tie corset', 'white tie corset', 'diplomatic corset', 'state dinner corset', 'inauguration corset', 'coronation corset', 'wedding corset', 'bridal corset', 'engagement corset', 'anniversary corset', 'valentine corset', 'romantic corset', 'date night corset', 'honeymoon corset', 'boudoir corset', 'intimate corset', 'lingerie corset', 'undergarment corset', 'foundation corset', 'shapewear corset', 'body shaping corset', 'figure enhancing corset', 'curve creating corset', 'silhouette defining corset', 'waist cinching corset', 'bust enhancing corset', 'push-up corset', 'lift and separate corset', 'cleavage enhancing corset', 'décolletage corset', 'plunging corset', 'deep v corset', 'sweetheart corset', 'heart-shaped corset', 'scalloped corset', 'curved corset', 'contoured corset', 'fitted corset', 'tailored corset', 'custom corset', 'bespoke corset', 'made-to-measure corset', 'haute couture corset', 'designer corset', 'luxury corset', 'premium corset', 'high-end corset', 'exclusive corset', 'limited edition corset', 'collector\'s corset', 'museum quality corset', 'archival corset', 'historical corset', 'period corset', 'authentic corset', 'reproduction corset', 'replica corset', 'inspired corset', 'themed corset', 'costume corset', 'theatrical corset', 'stage corset', 'performance corset', 'dance corset', 'ballet corset', 'opera corset', 'concert corset', 'recital corset', 'competition corset', 'championship corset', 'tournament corset', 'pageant corset', 'beauty queen corset', 'miss universe corset', 'miss world corset', 'runway corset', 'catwalk corset', 'fashion week corset', 'paris fashion corset', 'milan fashion corset', 'new york fashion corset', 'london fashion corset', 'tokyo fashion corset', 'international corset', 'global corset', 'worldwide corset', 'universal corset', 'timeless corset', 'classic corset', 'traditional corset', 'conventional corset', 'standard corset', 'regular corset', 'basic corset', 'simple corset', 'plain corset', 'understated corset', 'subtle corset', 'refined corset', 'elegant corset', 'sophisticated corset', 'chic corset', 'stylish corset', 'fashionable corset', 'trendy corset', 'modern corset', 'contemporary corset', 'current corset', 'up-to-date corset', 'cutting-edge corset', 'innovative corset', 'revolutionary corset', 'groundbreaking corset', 'pioneering corset', 'trailblazing corset', 'game-changing corset', 'industry-leading corset', 'market-leading corset', 'best-selling corset', 'top-rated corset', 'award-winning corset', 'prize-winning corset', 'champion corset', 'winning corset', 'victorious corset', 'triumphant corset', 'successful corset', 'popular corset', 'beloved corset', 'favorite corset', 'preferred corset', 'chosen corset', 'selected corset', 'handpicked corset', 'curated corset', 'specially chosen corset', 'carefully selected corset', 'sequined halter', 'backless halter', 'tie halter top', 'beaded halter', 'metallic halter', 'mesh halter top', 'crochet halter', 'fringe halter', 'chain halter', 'jeweled halter', 'cut-out halter', 'high neck halter', 'plunging halter', 'wrap halter', 'bandeau halter', 'silk camisole', 'lace camisole', 'satin camisole', 'mesh camisole', 'embroidered camisole', 'beaded camisole', 'sequined camisole', 'metallic camisole', 'racerback tank', 'muscle tank', 'fitted tank', 'loose tank', 'cropped tank', 'high-low tank', 'asymmetrical tank', 'holographic jacket', 'metallic jacket', 'sequined jacket', 'leather jacket', 'denim jacket', 'bomber jacket', 'cropped jacket', 'oversized jacket', 'fitted blazer', 'oversized blazer', 'cropped blazer', 'double-breasted blazer', 'tuxedo jacket', 'velvet blazer', 'satin blazer', 'brocade jacket', 'embroidered jacket', 'fringe jacket', 'fur jacket', 'faux fur jacket', 'cropped sweater', 'oversized sweater', 'fitted sweater', 'off-shoulder sweater', 'turtleneck sweater', 'cowl neck sweater', 'v-neck sweater', 'cardigan', 'cropped cardigan', 'long cardigan', 'wrap cardigan', 'button-up cardigan', 'cable knit sweater', 'chunky knit sweater', 'fine knit sweater', 'cashmere sweater', 'mohair sweater', 'angora sweater', 'alpaca sweater', 'wool sweater', 'mesh overlay top', 'fishnet top', 'sheer mesh top', 'metallic mesh top', 'glittery mesh top', 'holographic mesh top', 'chain mesh top', 'beaded mesh top', 'sequined mesh top', 'rhinestone mesh top', 'sheer chiffon top', 'sheer silk top', 'sheer lace top', 'transparent top', 'see-through top', 'bodysuit', 'leotard', 'unitard', 'catsuit top', 'jumpsuit top', 'romper top', 'playsuit top', 'overall top', 'suspender top', 'harness top', 'cage top', 'bondage top', 'fetish top', 'latex top', 'PVC top', 'kimono top', 'cheongsam top', 'qipao top', 'sari blouse', 'choli top', 'hanbok top', 'dirndl top', 'peasant top', 'folk top', 'ethnic top', 'tribal top', 'bohemian top', 'gypsy top', 'hippie top', 'festival top', 'armor top', 'chainmail top', 'scale armor top', 'plate armor top', 'fantasy armor', 'warrior top', 'gladiator top', 'viking top', 'medieval top', 'renaissance top', 'victorian top', 'steampunk top', 'cyberpunk top', 'futuristic top', 'sci-fi top', 'space suit top', 'robot top', 'android top', 'cyborg top', 'alien top', 'sports bra', 'athletic top', 'workout top', 'gym top', 'yoga top', 'pilates top', 'dance top', 'ballet top', 'cheerleader top', 'tennis top', 'golf top', 'running top', 'cycling top', 'swimming top', 'bikini top', '1920s beaded top', '1930s bias cut top', '1940s victory top', '1950s halter top', '1960s mod top', '1970s peasant top', '1980s power top', '1990s grunge top', '2000s y2k top', 'pin-up top', 'rockabilly top', 'vintage band tee', 'retro graphic tee', 'vintage concert tee', 'throwback jersey', 'punk rock top', 'goth top', 'emo top', 'scene top', 'grunge top', 'metal top', 'hardcore top', 'industrial top', 'darkwave top', 'rivethead top', 'cyber goth top', 'visual kei top', 'lolita blouse', 'decora top', 'fairy kei top'],
   bottomDescription: ['none', 'mini skirt with tulle', 'pleated school skirt', 'flowing maxi skirt', 'A-line mini skirt', 'circle skirt', 'pencil skirt', 'wrap skirt', 'tiered ruffle skirt', 'asymmetrical skirt', 'high-low skirt', 'bubble skirt', 'peplum skirt', 'flared skirt', 'trumpet skirt', 'mermaid skirt', 'ballgown skirt', 'tutu skirt', 'layered tulle skirt', 'organza skirt', 'chiffon skirt', 'satin skirt', 'silk skirt', 'velvet skirt', 'lace skirt', 'sequined skirt', 'metallic skirt', 'holographic skirt', 'glittery skirt', 'sparkly skirt', 'rhinestone skirt', 'beaded skirt', 'embroidered skirt', 'printed skirt', 'floral skirt', 'polka dot skirt', 'striped skirt', 'plaid skirt', 't tartan skirt', 'checkered skirt', 'geometric pattern skirt', 'animal print skirt', 'leopard print skirt', 'zebra print skirt', 'snake print skirt', 'high-waisted shorts', 'low-rise shorts', 'mid-rise shorts', 'denim shorts', 'distressed denim shorts', 'ripped denim shorts', 'frayed hem shorts', 'cuffed shorts', 'rolled hem shorts', 'hot pants', 'booty shorts', 'micro shorts', 'boy shorts', 'bermuda shorts', 'cargo shorts', 'athletic shorts', 'running shorts', 'gym shorts', 'bike shorts', 'cycling shorts', 'compression shorts', 'spandex shorts', 'lycra shorts', 'leather shorts', 'faux leather shorts', 'vinyl shorts', 'PVC shorts', 'latex shorts', 'metallic shorts', 'sequined shorts', 'glittery shorts', 'sparkly shorts', 'holographic shorts', 'mesh shorts', 'lace shorts', 'crochet shorts', 'knit shorts', 'cotton shorts', 'linen shorts', 'silk shorts', 'satin shorts', 'chiffon shorts', 'tulle shorts', 'leather pants', 'faux leather pants', 'vinyl pants', 'PVC pants', 'latex pants', 'skinny jeans', 'slim fit jeans', 'straight leg jeans', 'bootcut jeans', 'flare jeans', 'wide leg jeans', 'boyfriend jeans', 'mom jeans', 'high-waisted jeans', 'low-rise jeans', 'mid-rise jeans', 'distressed jeans', 'ripped jeans', 'torn jeans', 'acid wash jeans', 'bleached jeans', 'dark wash jeans', 'light wash jeans', 'black jeans', 'white jeans', 'colored jeans', 'printed jeans', 'embroidered jeans', 'studded jeans', 'rhinestone jeans', 'sequined jeans', 'metallic jeans', 'holographic jeans', 'glittery jeans', 'sparkly jeans', 'metallic leggings', 'holographic leggings', 'sequined leggings', 'glittery leggings', 'sparkly leggings', 'rhinestone leggings', 'beaded leggings', 'leather leggings', 'faux leather leggings', 'vinyl leggings', 'PVC leggings', 'latex leggings', 'mesh leggings', 'fishnet leggings', 'lace leggings', 'sheer leggings', 'opaque leggings', 'compression leggings', 'athletic leggings', 'yoga leggings', 'workout leggings', 'gym leggings', 'running leggings', 'capri leggings', 'cropped leggings', 'ankle leggings', 'full length leggings', 'high-waisted leggings', 'low-rise leggings', 'mid-rise leggings', 'printed leggings', 'patterned leggings', 'floral leggings', 'geometric leggings', 'animal print leggings', 'leopard print leggings', 'zebra print leggings', 'snake print leggings', 'tie-dye leggings', 'ombre leggings', 'gradient leggings', 'rainbow leggings', 'galaxy print leggings', 'space print leggings', 'cosmic leggings', 'nebula leggings', 'star print leggings', 'moon phase leggings'],
   indianOutfit: ['elegant sari', 'modern lehenga choli', 'stylish salwar kameez', 'ornate anarkali suit', 'fusion-style gown', 'traditional ghagra choli'],
-  headwear: ['none', 'sparkly tiara', 'flower crown', 'lilac head scarf', 'elegant hat', 'classic beret', 'cozy beanie', 'stylish visor', 'trendy bucket hat', 'casual baseball cap', 'fascinator', 'sleek fedora', 'knitted slouchy hat', 'lace head band', 'feathered fascinator'],
+  headwear: ['none', 'sparkly tiara', 'Santa hat', 'classic beret', 'flower crown', 'lilac head scarf', 'elegant hat', 'cozy beanie', 'stylish visor', 'trendy bucket hat', 'casual baseball cap', 'fascinator', 'sleek fedora', 'knitted slouchy hat', 'lace head band', 'feathered fascinator'],
   style: ['semi-realistic airbrushed'],
   gownStyle: ['elegant ballgown', 'mermaid silhouette dress', 'A-line princess gown', 'sleek evening gown', 'red carpet dress', 'couture masterpiece', 'ethereal fairy gown', 'sparkling celestial dress'],
-  themedCostume: ['magical fairy', 'whimsical witch', 'superheroine', 'celestial goddess', 'fantasy warrior', 'anime magical girl', 'steampunk adventurer', 'cyberpunk operative', 'spooky cute witch (Halloween)', 'vampire princess (Halloween)', 'ghostly bride (Halloween)'],
+  themedCostume: ['magical fairy', 'whimsical witch', 'superheroine', 'celestial goddess', 'fantasy warrior', 'anime magical girl', 'steampunk adventurer', 'cyberpunk operative', 'Ice Princess Gown', 'spooky cute witch (Halloween)', 'vampire princess (Halloween)', 'ghostly bride (Halloween)'],
   summerOutfit: ['boho chic sundress', 'trendy shorts and crop top', 'stylish beach cover-up', 'casual summer romper', 'flowing maxi dress'],
-  christmasOutfit: ['ugly Christmas sweater outfit', 'cozy Christmas pajamas', 'elegant holiday party dress', 'festive Santa-inspired outfit'],
+  christmasOutfit: ['cozy Christmas pajama set', 'stylish Christmas sweater', 'winter puffer jacket and skirt', 'Elegant Winter Gown', 'ugly Christmas sweater outfit', 'elegant holiday party dress', 'festive Santa-inspired outfit'],
   valentinesOutfit: ['romantic cocktail dress', 'elegant red gown', 'cute pink sweater and skirt', 'lacey top and trousers'],
+  chicAutumnOutfit: ['knit_leather_combo'],
+  chicWinterOutfit: ['leather_shearling_combo'],
+  chicStreetStyle: ['plaid_coat_turtleneck', 'camel_coat_trousers'],
+  freckles: ['none', 'soft freckles', 'sun-kissed freckles', 'a light sprinkle of freckles'],
+  jewelry: ['none', 'a delicate gold necklace', 'chunky silver hoop earrings', 'pearl stud earrings', 'layered thin necklaces', 'a statement bracelet', 'dainty rings'],
   sceneDescription: [
     'none',
     'a soft-focus enchanted garden backdrop', 
@@ -199,10 +354,19 @@ export const WORD_BANK: { [K in keyof FormData]?: string[] } = {
     'a dreamy cloud palace backdrop', 
     'a sparkly dance floor backdrop', 
     'a mystical enchanted forest backdrop', 
-    'a sleek futuristic space station interior backdrop'
+    'a sleek futuristic space station interior backdrop',
+    'a cozy indoor Christmas scene with a fireplace',
+    'a snowy outdoor scene with festive string lights',
+    'a winter city street at dusk with bokeh lights',
+    'a grand ice palace ballroom',
+    'a bustling winter city street with bokeh lights',
+    'a stylish European city street in winter',
+    'an elegant, snowy courtyard with warm lights',
   ],
-  lightingDescription: ['none', 'soft rainbow glow', 'dramatic spotlight', 'shimmering light', 'neon backlighting', 'golden hour warmth', 'ethereal moonlight'],
-  plannerCategory: Object.keys(PLANNER_PROPS),
+  lightingDescription: ['none', 'soft rainbow glow', 'dramatic spotlight', 'shimmering light', 'neon backlighting', 'golden hour warmth', 'ethereal moonlight', 'mystic fog', 'enchanted twilight', 'starlight glimmer', 'fairy dust sparkle', 'angelic radiance', 'sun-dappled glow', 'candlelit warmth', 'volumetric lighting', 'cinematic lighting', 'rim lighting', 'bioluminescent glow', 'shimmering crystal light'],
+  plannerCategory: Object.keys(PLANNER_THEMES),
+  plannerType: [], // This will be populated dynamically
+  plannerPalette: ['main', 'winter', 'spring', 'summer', 'autumn'],
   plannerPropCombination: [], // This will be populated dynamically
   layeredOuterwear: ['none', 'elegant trench coat', 'classic wool coat', 'long wool coat', 'double-breasted wool coat', 'cashmere coat', 'peacoat', 'puffer coat', 'down jacket', 'quilted jacket', 'fur-trimmed coat', 'faux fur coat', 'teddy bear coat', 'shearling coat', 'parka', 'anorak', 'cape coat', 'wrap coat', 'belted coat', 'oversized coat', 'fitted coat', 'corduroy jacket (Autumn)', 'plaid flannel shacket (Autumn)', 'leather jacket (Autumn)'],
   layeredTop: ['none', 'cozy knitted sweater', 'chunky knit sweater', 'cable knit sweater', 'turtleneck sweater', 'cowl neck sweater', 'oversized sweater', 'cropped sweater', 'cardigan sweater', 'wrap sweater', 'pullover sweater', 'cashmere sweater', 'wool sweater', 'mohair sweater', 'angora sweater', 'alpaca sweater', 'fair isle sweater', 'nordic sweater', 'christmas sweater', 'ugly Christmas sweater', 'holiday sweater', 'snowflake sweater', 'warm flannel shirt (Autumn)', 'mock-neck sweater (Autumn)'],
@@ -211,8 +375,91 @@ export const WORD_BANK: { [K in keyof FormData]?: string[] } = {
   layeredGloves: ['none', 'knitted mittens', 'wool mittens', 'cashmere mittens', 'fingerless mittens', 'convertible mittens', 'leather gloves', 'suede gloves', 'knitted gloves', 'wool gloves', 'cashmere gloves', 'touchscreen gloves', 'driving gloves', 'opera gloves', 'elbow-length gloves', 'fur-lined gloves', 'thermal gloves', 'waterproof gloves', 'ski gloves', 'snowboard gloves', 'heated gloves', 'thin leather gloves (Autumn)'],
 };
 
+export const COLOR_PALETTES: ColorPalette[] = [
+  {
+    name: 'Sunset Glow',
+    hair: ['copper red', 'golden blonde', 'strawberry blonde'],
+    eyes: ['honey amber', 'warm hazel brown', 'golden hazel'],
+    lips: ['sunset orange', 'coral shimmer', 'peach cream'],
+    eyeshadow: ['sunset orange', 'shimmering gold', 'copper shimmer'],
+    outfitStyle: ['boho chic outfit', 'summer festival outfit'],
+    tops: ['peasant blouse', 'crochet halter', 'off-shoulder blouse'],
+    bottoms: ['flowing maxi skirt', 'denim shorts', 'wide leg jeans']
+  },
+  {
+    name: 'Ocean Breeze',
+    hair: ['ash blonde', 'sky blue', 'platinum blonde'],
+    eyes: ['ocean blue', 'sky blue', 'sea green', 'steel gray'],
+    lips: ['nude beige', 'soft pink', 'peach fuzz'],
+    eyeshadow: ['teal shimmer', 'ice blue', 'holographic silver'],
+    outfitStyle: ['casual chic outfit', 'beach vacation wear'],
+    tops: ['button-up shirt', 'silk camisole', 'bandeau crop top'],
+    bottoms: ['denim shorts', 'flowing maxi skirt', 'light wash jeans']
+  },
+  {
+    name: 'Forest Whisper',
+    hair: ['dark brown', 'emerald green', 'chestnut brown', 'jet black'],
+    eyes: ['forest green', 'emerald green', 'moss green', 'dark chocolate brown'],
+    lips: ['berry gloss', 'nude brown', 'wine red'],
+    eyeshadow: ['olive shimmer', 'soft brown', 'emerald green'],
+    outfitStyle: ['boho chic outfit', 'dark academia outfit'],
+    tops: ['oversized sweater', 'lace blouse', 'velvet corset'],
+    bottoms: ['plaid skirt', 'dark wash jeans', 'pleated school skirt']
+  },
+  {
+    name: 'Pastel Dream',
+    hair: ['cotton candy pink', 'lavender purple', 'pastel blue', 'mint green'],
+    eyes: ['rose pink', 'lavender purple', 'sky blue'],
+    lips: ['bubblegum pink', 'baby pink', 'holographic shimmer'],
+    eyeshadow: ['holographic pink', 'soft lavender', 'cotton candy clouds'],
+    outfitStyle: ['kawaii outfit', 'fairy kei outfit', 'sweet lolita dress'],
+    tops: ['ruffled corset', 'lace blouse', 'sparkly crop top'],
+    bottoms: ['layered tulle skirt', 'pleated school skirt', 'tutu skirt']
+  },
+  {
+    name: 'Monochrome Chic',
+    hair: ['jet black', 'platinum blonde', 'silver gray', 'white blonde'],
+    eyes: ['silver gray', 'dark chocolate brown', 'storm gray', 'charcoal gray'],
+    lips: ['classic red', 'nude beige', 'deep plum', 'matte brown'],
+    eyeshadow: ['smoky black', 'silver smoke', 'gunmetal gray'],
+    outfitStyle: ['minimalist modern wear', 'punk rock outfit', 'gothic lolita dress'],
+    tops: ['leather corset', 'button-up shirt', 'sheer mesh top'],
+    bottoms: ['leather pants', 'plaid skirt', 'leather shorts']
+  },
+  {
+    name: 'Vibrant Pop',
+    hair: ['electric blue', 'hot pink', 'neon green', 'fire ombre'],
+    eyes: ['electric blue', 'neon green', 'electric purple'],
+    lips: ['fuchsia pink', 'neon orange', 'electric purple'],
+    eyeshadow: ['electric purple', 'lime pop', 'neon pink', 'rainbow chrome'],
+    outfitStyle: ['cyberpunk outfit', 'techno rave wear', 'y2k street wear'],
+    tops: ['holographic crop top', 'mesh crop top', 'metallic bustier'],
+    bottoms: ['holographic leggings', 'metallic shorts', 'mini skirt with tulle']
+  },
+  {
+    name: 'Rose Gold Glam',
+    hair: ['rose gold', 'strawberry blonde', 'light brown'],
+    eyes: ['rose pink', 'golden hazel', 'warm hazel brown'],
+    lips: ['rose gold shimmer', 'dusty rose', 'nude rose'],
+    eyeshadow: ['rose gold', 'copper shimmer', 'champagne gold'],
+    outfitStyle: ['glamorous party dress', 'cocktail party outfit'],
+    tops: ['sequined crop top', 'satin camisole', 'satin corset'],
+    bottoms: ['mini skirt with tulle', 'sequined skirt', 'satin skirt']
+  },
+  {
+      name: 'Earthy Autumn',
+      hair: ['auburn brown', 'copper red', 'chocolate brown', 'honey brown'],
+      eyes: ['warm hazel brown', 'amber brown', 'olive green'],
+      lips: ['cinnamon brown', 'burnt orange', 'berry gloss', 'brick red'],
+      eyeshadow: ['warm bronze', 'sunset orange', 'copper shimmer', 'gold and brown duo chrome'],
+      outfitStyle: ['cozy autumncore', 'dark academia outfit'],
+      tops: ['chunky knit sweater', 'warm flannel shirt (Autumn)', 'mock-neck sweater (Autumn)'],
+      bottoms: ['plaid skirt', 'dark wash jeans', 'pleated school skirt']
+  }
+];
+
 export const ADVANCED_COORDINATION = {
-  themes: ['glamorous', 'kawaii', 'cyberpunk', 'vintage', 'bohemian', 'gothic', 'sporty', 'winter', 'autumn', 'summer', 'halloween', 'valentines', 'fantasy', 'planner', 'formal', 'indian'],
+  themes: ['glamorous', 'kawaii', 'cyberpunk', 'vintage', 'bohemian', 'gothic', 'sporty', 'winter', 'chicWinter', 'chicStreet', 'autumn', 'chicAutumn', 'summer', 'christmas', 'halloween', 'valentines', 'fantasy', 'planner', 'formal', 'indian'],
   perfectCombinations: {
     glamorous: {
       outfitCategory: 'Detailed Outfit',
@@ -293,56 +540,44 @@ export const ADVANCED_COORDINATION = {
     },
     winter: {
         outfitCategory: 'Winter Wear',
-        hairColors: ['platinum blonde', 'silver gray', 'ash blonde', 'dark brown', 'burgundy red'],
-        eyeColors: ['ice blue', 'steel blue', 'silver gray', 'deep brown'],
-        lipColors: ['ruby red', 'burgundy red', 'deep plum', 'nude beige']
+    },
+    chicWinter: {
+        outfitCategory: 'Chic Winter Outfit',
+    },
+    chicStreet: {
+        outfitCategory: 'Chic Street Style',
     },
     autumn: {
         outfitCategory: 'Autumn Wear',
-        hairColors: ['auburn brown', 'copper red', 'chocolate brown', 'honey brown'],
-        lipColors: ['cinnamon brown', 'burnt orange', 'berry gloss'],
-        eyeshadowColors: ['warm bronze', 'sunset orange', 'copper shimmer', 'gold and brown duo chrome'],
+    },
+    chicAutumn: {
+      outfitCategory: 'Chic Autumn Outfit',
     },
     summer: {
         outfitCategory: 'Summer Outfit',
-        hairColors: ['rose gold', 'honey blonde', 'strawberry blonde'],
-        lipColors: ['coral pink', 'peachy nude', 'hot pink'],
-        eyeshadowColors: ['sunset orange', 'shimmering gold', 'peachy coral'],
     },
     christmas: {
       outfitCategory: 'Christmas Outfit',
-      hairColors: ['jet black', 'platinum blonde', 'golden blonde'],
-      lipColors: ['ruby red', 'cherry red'],
-      eyeshadowColors: ['shimmering gold', 'champagne gold'],
     },
     halloween: {
       outfitCategory: 'Themed Costume',
       themedCostumes: ['spooky cute witch (Halloween)', 'vampire princess (Halloween)', 'ghostly bride (Halloween)'],
-      hairColors: ['jet black', 'deep purple', 'neon orange', 'white blonde'],
-      lipColors: ['deep plum', 'blood red', 'black'],
     },
     valentines: {
         outfitCategory: 'Valentines Outfit',
-        hairColors: ['rose gold', 'cotton candy pink', 'chocolate brown'],
-        lipColors: ['hot pink', 'rose pink', 'cherry red'],
-        eyeshadowColors: ['rose gold', 'holographic pink'],
     },
     fantasy: {
         outfitCategory: 'Themed Costume',
-        themedCostumes: ['magical fairy', 'celestial goddess', 'fantasy warrior', 'whimsical witch'],
-        hairColors: ['lavender purple', 'rose gold', 'holographic silver', 'emerald green', 'sapphire blue'],
+        themedCostumes: ['magical fairy', 'celestial goddess', 'fantasy warrior', 'whimsical witch', 'Ice Princess Gown'],
     },
     formal: {
       outfitCategory: 'Formal Gown',
       gowns: ['elegant ballgown', 'mermaid silhouette dress', 'A-line princess gown', 'red carpet dress'],
-      hairColors: ['jet black', 'platinum blonde', 'auburn brown', 'golden blonde', 'deep brown'],
       hairStyles: ['elegant updo', 'hollywood waves', 'sleek high ponytail', 'braided crown'],
     },
     planner: {
       outfitCategory: 'Planner Outfit',
-      categories: Object.keys(PLANNER_PROPS),
-      hairColors: ['honey brown', 'chocolate brown', 'ash blonde', 'dark brown'],
-      lipColors: ['nude pink', 'dusty rose', 'coral pink', 'soft peach'],
+      categories: Object.keys(PLANNER_THEMES),
       hairStyles: ['messy bun', 'high ponytail', 'sleek bob', 'straight with bangs'],
     },
     indian: {

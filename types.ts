@@ -1,3 +1,5 @@
+
+// Fix: Removed circular import of FormData from './types' which was causing a name collision.
 export interface FormData {
   outfitCategory: string;
   skinTone: string;
@@ -14,12 +16,16 @@ export interface FormData {
   hairColor: string;
   hairDescription: string;
   hairHighlights: string;
+  hairAccessory: string;
   outfitStyle: string;
+  outfitColor: string;
   topDescription: string;
   bottomDescription: string;
   indianOutfit: string;
   headwear: string;
   plannerCategory: string;
+  plannerType: string;
+  plannerPalette: string;
   plannerPropCombination: string;
   layeredOuterwear: string;
   layeredTop: string;
@@ -31,6 +37,11 @@ export interface FormData {
   summerOutfit: string;
   christmasOutfit: string;
   valentinesOutfit: string;
+  chicAutumnOutfit: string;
+  chicWinterOutfit: string;
+  chicStreetStyle: string;
+  freckles: string;
+  jewelry: string;
   extraDescription: string;
   style: string;
   sceneDescription: string;
@@ -40,4 +51,15 @@ export interface FormData {
 export interface Option {
   value: string;
   label: string;
+}
+
+export interface ColorPalette {
+  name: string;
+  hair: string[];
+  eyes: string[];
+  lips: string[];
+  eyeshadow: string[];
+  outfitStyle: string[];
+  tops: string[];
+  bottoms: string[];
 }

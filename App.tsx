@@ -1,6 +1,6 @@
 import React, { useState, useCallback, ChangeEvent, useEffect } from 'react';
 import { FormData, Option } from './types';
-import { initialFormData, WORD_BANK, PLANNER_PROPS } from './constants';
+import { initialFormData, WORD_BANK, PLANNER_THEMES, SKIN_TONES_BY_ETHNICITY } from './constants';
 import { buildPrompt } from './services/promptService';
 import { getRandomizedForm } from './services/randomizerService';
 import Header from './components/Header';
@@ -14,13 +14,12 @@ const App: React.FC = () => {
     const [formData, setFormData] = useState<FormData>(initialFormData);
     const [prompts, setPrompts] = useState<string[]>([]);
     const [notification, setNotification] = useState<string | null>(null);
-    const [plannerPropOptions, setPlannerPropOptions] = useState<Option[]>([]);
+    const [plannerTypeOptions, setPlannerTypeOptions] = useState<Option[]>([]);
 
     useEffect(() => {
-        // When plannerCategory changes, update the available prop options
-        const categoryKey = formData.plannerCategory as keyof typeof PLANNER_PROPS;
-        const newOptions = PLANNER_PROPS[categoryKey] || [];
-        setPlannerPropOptions(newOptions);
+        const categoryKey = formData.plannerCategory as keyof typeof PLANNER_THEMES;
+        const newOptions = PLANNER_THEMES[categoryKey]?.map(p => ({ label: p.label, value: p.value })) || [];
+        setPlannerTypeOptions(newOptions);
     }, [formData.plannerCategory]);
 
 
@@ -32,18 +31,35 @@ const App: React.FC = () => {
     const handleChange = useCallback((e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
         const { id, value } = e.target;
         
-        if (id === 'plannerCategory') {
-            const categoryKey = value as keyof typeof PLANNER_PROPS;
-            const firstProp = PLANNER_PROPS[categoryKey]?.[0]?.value || 'none';
+        if (id === 'ethnicity') {
+            const tonesForNewEthnicity = SKIN_TONES_BY_ETHNICITY[value] || WORD_BANK.skinTone || [];
+            const newSkinTone = tonesForNewEthnicity.length > 0 ? tonesForNewEthnicity[0] : initialFormData.skinTone;
+            setFormData(prev => ({
+                ...prev,
+                ethnicity: value,
+                skinTone: newSkinTone
+            }));
+        } else if (id === 'plannerCategory') {
+            const categoryKey = value as keyof typeof PLANNER_THEMES;
+            const firstPlannerType = PLANNER_THEMES[categoryKey]?.[0];
             setFormData(prev => ({ 
                 ...prev, 
                 plannerCategory: value,
-                plannerPropCombination: firstProp 
+                plannerType: firstPlannerType?.value || 'none',
+                plannerPropCombination: firstPlannerType?.prop || 'none'
+            }));
+        } else if (id === 'plannerType') {
+            const categoryKey = formData.plannerCategory as keyof typeof PLANNER_THEMES;
+            const selectedPlanner = PLANNER_THEMES[categoryKey]?.find(p => p.value === value);
+            setFormData(prev => ({
+                ...prev,
+                plannerType: value,
+                plannerPropCombination: selectedPlanner?.prop || 'none'
             }));
         } else {
             setFormData(prev => ({ ...prev, [id]: value }));
         }
-    }, []);
+    }, [formData.plannerCategory]);
     
     const generatePrompts = (count: number) => {
         if (count === 1) {
@@ -74,9 +90,11 @@ const App: React.FC = () => {
             ...prev,
             outfitCategory: initialFormData.outfitCategory,
             outfitStyle: initialFormData.outfitStyle,
+            outfitColor: initialFormData.outfitColor,
             topDescription: initialFormData.topDescription,
             bottomDescription: initialFormData.bottomDescription,
             indianOutfit: initialFormData.indianOutfit,
+            headwear: initialFormData.headwear,
             layeredOuterwear: initialFormData.layeredOuterwear,
             layeredTop: initialFormData.layeredTop,
             layeredScarf: initialFormData.layeredScarf,
@@ -87,12 +105,19 @@ const App: React.FC = () => {
             summerOutfit: initialFormData.summerOutfit,
             christmasOutfit: initialFormData.christmasOutfit,
             valentinesOutfit: initialFormData.valentinesOutfit,
+            chicAutumnOutfit: initialFormData.chicAutumnOutfit,
+            chicWinterOutfit: initialFormData.chicWinterOutfit,
+            chicStreetStyle: initialFormData.chicStreetStyle,
             plannerCategory: initialFormData.plannerCategory,
+            plannerType: initialFormData.plannerType,
+            plannerPalette: initialFormData.plannerPalette,
             plannerPropCombination: initialFormData.plannerPropCombination,
             sceneDescription: initialFormData.sceneDescription,
             lightingDescription: initialFormData.lightingDescription,
             extraDescription: '',
             eyeType: 'none',
+            freckles: 'none',
+            jewelry: 'none',
        }));
        showNotification('Outfit & Scene cleared.');
     };
@@ -107,6 +132,9 @@ const App: React.FC = () => {
       return values.map(v => ({ value: v, label: v.charAt(0).toUpperCase() + v.slice(1).replace(/_/g, ' ') }));
     };
 
+    const currentSkinToneOptions = (SKIN_TONES_BY_ETHNICITY[formData.ethnicity] || WORD_BANK.skinTone || [])
+        .map(v => ({ value: v, label: v.charAt(0).toUpperCase() + v.slice(1).replace(/_/g, ' ') }));
+
     return (
         <div className="max-w-7xl mx-auto p-4 sm:p-6">
             <Header />
@@ -116,8 +144,8 @@ const App: React.FC = () => {
                 <main className="lg:col-span-2 space-y-4">
                     <Section title="🎨 Basic Information">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                            <SelectInput label="Skin Tone" id="skinTone" value={formData.skinTone} onChange={handleChange} options={toOptions('skinTone')} />
                             <SelectInput label="Ethnicity" id="ethnicity" value={formData.ethnicity} onChange={handleChange} options={toOptions('ethnicity')} />
+                            <SelectInput label="Skin Tone" id="skinTone" value={formData.skinTone} onChange={handleChange} options={currentSkinToneOptions} />
                             <SelectInput label="Age" id="age" value={formData.age} onChange={handleChange} options={toOptions('age')} />
                         </div>
                     </Section>
@@ -131,6 +159,13 @@ const App: React.FC = () => {
                         </div>
                     </Section>
 
+                    <Section title="✨ Extra Details">
+                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <SelectInput label="Freckles" id="freckles" value={formData.freckles} onChange={handleChange} options={toOptions('freckles')} />
+                            <SelectInput label="Jewelry" id="jewelry" value={formData.jewelry} onChange={handleChange} options={toOptions('jewelry')} />
+                        </div>
+                    </Section>
+                    
                     <Section title="💅 Nails">
                         <div className="grid grid-cols-1">
                             <SelectInput label="Nail Style" id="nailStyle" value={formData.nailStyle} onChange={handleChange} options={toOptions('nailStyle')} />
@@ -146,15 +181,22 @@ const App: React.FC = () => {
                     </Section>
 
                     <Section title="💇‍♀️ Hair">
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                             <SelectInput label="Hair Color" id="hairColor" value={formData.hairColor} onChange={handleChange} options={toOptions('hairColor')} />
                             <SelectInput label="Hair Style" id="hairDescription" value={formData.hairDescription} onChange={handleChange} options={toOptions('hairDescription')} />
                             <SelectInput label="Hair Highlights" id="hairHighlights" value={formData.hairHighlights} onChange={handleChange} options={toOptions('hairHighlights')} />
+                            <SelectInput label="Hair Accessory" id="hairAccessory" value={formData.hairAccessory} onChange={handleChange} options={toOptions('hairAccessory')} />
                         </div>
                     </Section>
 
                     <Section title="👗 Outfit">
                         <SelectInput label="Outfit Category" id="outfitCategory" value={formData.outfitCategory} onChange={handleChange} options={toOptions('outfitCategory')} />
+
+                        {['Detailed Outfit', 'Formal Gown', 'Summer Outfit', 'Valentines Outfit', 'Christmas Outfit'].includes(formData.outfitCategory) && (
+                            <div className="grid grid-cols-1 mt-3">
+                                <SelectInput label="Outfit Color" id="outfitColor" value={formData.outfitColor} onChange={handleChange} options={toOptions('outfitColor')} />
+                            </div>
+                        )}
                         
                         {formData.outfitCategory === 'Detailed Outfit' && (
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
@@ -195,6 +237,24 @@ const App: React.FC = () => {
                             </div>
                         )}
 
+                        {formData.outfitCategory === 'Chic Autumn Outfit' && (
+                             <div className="grid grid-cols-1 mt-3">
+                                 <SelectInput label="Autumn Style" id="chicAutumnOutfit" value={formData.chicAutumnOutfit} onChange={handleChange} options={[{value: 'knit_leather_combo', label: 'Knit Sweater & Leather Pants'}]} />
+                            </div>
+                        )}
+
+                        {formData.outfitCategory === 'Chic Winter Outfit' && (
+                             <div className="grid grid-cols-1 mt-3">
+                                 <SelectInput label="Winter Style" id="chicWinterOutfit" value={formData.chicWinterOutfit} onChange={handleChange} options={[{value: 'leather_shearling_combo', label: 'Leather & Shearling Jacket'}]} />
+                            </div>
+                        )}
+
+                         {formData.outfitCategory === 'Chic Street Style' && (
+                             <div className="grid grid-cols-1 mt-3">
+                                 <SelectInput label="Street Style" id="chicStreetStyle" value={formData.chicStreetStyle} onChange={handleChange} options={toOptions('chicStreetStyle')} />
+                            </div>
+                        )}
+
                         {formData.outfitCategory === 'Summer Outfit' && (
                             <div className="grid grid-cols-1 mt-3">
                                 <SelectInput label="Summer Outfit" id="summerOutfit" value={formData.summerOutfit} onChange={handleChange} options={toOptions('summerOutfit')} />
@@ -214,9 +274,10 @@ const App: React.FC = () => {
                         )}
                         
                         {formData.outfitCategory === 'Planner Outfit' && (
-                             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+                             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
                                 <SelectInput label="Planner Category" id="plannerCategory" value={formData.plannerCategory} onChange={handleChange} options={toOptions('plannerCategory')} />
-                                <SelectInput label="Props in Hands" id="plannerPropCombination" value={formData.plannerPropCombination} onChange={handleChange} options={plannerPropOptions} />
+                                <SelectInput label="Planner Type" id="plannerType" value={formData.plannerType} onChange={handleChange} options={plannerTypeOptions} />
+                                <SelectInput label="Planner Color Palette" id="plannerPalette" value={formData.plannerPalette} onChange={handleChange} options={toOptions('plannerPalette')} />
                              </div>
                         )}
 

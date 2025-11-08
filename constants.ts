@@ -40,6 +40,9 @@ export const initialFormData: FormData = {
   chicAutumnOutfit: 'knit_leather_combo',
   chicWinterOutfit: 'leather_shearling_combo',
   chicStreetStyle: 'plaid_coat_turtleneck',
+  businessChicOutfit: 'red_blazer_dress',
+  elegantProfessionalStyle: 'white_blazer_white_trousers',
+  luxeChicStyle: 'sheer_blouse_jeans',
   freckles: 'none',
   jewelry: 'none',
   extraDescription: '',
@@ -314,7 +317,7 @@ export const PLANNER_COLOR_PALETTES: { [key: string]: { [key: string]: string[] 
 
 
 export const WORD_BANK: { [K in keyof FormData]?: string[] } = {
-  outfitCategory: ['Detailed Outfit', 'Indian Outfit', 'Formal Gown', 'Themed Costume', 'Winter Wear', 'Chic Winter Outfit', 'Chic Street Style', 'Autumn Wear', 'Chic Autumn Outfit', 'Summer Outfit', 'Christmas Outfit', 'Valentines Outfit', 'Planner Outfit'],
+  outfitCategory: ['Detailed Outfit', 'Indian Outfit', 'Formal Gown', 'Themed Costume', 'Winter Wear', 'Chic Winter Outfit', 'Chic Street Style', 'Autumn Wear', 'Chic Autumn Outfit', 'Summer Outfit', 'Christmas Outfit', 'Valentines Outfit', 'Business Chic Outfit', 'Elegant Professional Style', 'Luxe & Chic Style', 'Planner Outfit'],
   skinTone: ['porcelain', 'ivory', 'alabaster', 'pearl white', 'snow white', 'cream', 'fair-skinned', 'pale rose', 'milky white', 'moonlight pale', 'light peach', 'soft pink', 'peachy cream', 'vanilla', 'light beige', 'champagne', 'light sand', 'pale gold', 'light honey', 'soft yellow', 'warm beige', 'light olive', 'peachy beige', 'golden beige', 'warm sand', 'light caramel', 'honey wheat', 'warm ivory', 'light bronze', 'golden cream', 'golden tan', 'warm tan', 'medium beige', 'caramel', 'honey brown', 'medium olive', 'warm bronze', 'golden brown', 'amber', 'medium sand', 'toffee', 'butterscotch', 'deep caramel', 'rich bronze', 'warm copper', 'medium brown', 'chestnut', 'mahogany', 'deep olive', 'coffee brown', 'cocoa', 'mocha', 'cinnamon', 'russet', 'deep brown', 'dark chocolate', 'espresso', 'dark bronze', 'deep copper', 'dark caramel', 'burnt sienna', 'dark amber', 'deep mahogany', 'rich cocoa', 'dark mocha', 'deep chestnut', 'rich ebony', 'deep ebony', 'dark ebony', 'midnight brown', 'obsidian', 'onyx', 'jet black', 'deep espresso', 'rich chocolate', 'dark coffee', 'blackberry', 'deep umber', 'cool ivory', 'cool beige', 'cool sand', 'cool brown', 'ash brown', 'cool olive', 'cool bronze', 'cool ebony', 'steel gray undertone', 'cool chocolate', 'warm ivory', 'warm cream', 'warm peach', 'warm honey', 'warm caramel', 'warm mahogany', 'warm ebony', 'golden undertone', 'copper undertone', 'red undertone', 'neutral ivory', 'neutral beige', 'neutral tan', 'neutral brown', 'neutral olive', 'neutral bronze', 'neutral ebony', 'balanced undertone', 'true beige', 'natural brown', 'golden goddess', 'bronze beauty', 'caramel queen', 'chocolate princess', 'ebony empress', 'honey glow', 'sun-kissed', 'radiant bronze', 'luminous brown', 'glowing ebony', 'moonlit silver', 'golden shimmer', 'rose gold glow', 'pearl luminescence', 'bronze metallic', 'copper shine', 'ethereal glow', 'celestial radiance', 'divine luminosity', 'angelic shimmer'],
   ethnicity: ['European', 'East Asian', 'South Asian', 'Indian', 'Latina', 'Middle Eastern', 'African', 'African American', 'Pacific Islander', 'Native American', 'Mixed heritage'],
   age: ['18', '20', '22', '25', '28', '30', '35', '40', '45', '50', '55', '60'],
@@ -342,9 +345,36 @@ export const WORD_BANK: { [K in keyof FormData]?: string[] } = {
   summerOutfit: ['boho chic sundress', 'trendy shorts and crop top', 'stylish beach cover-up', 'casual summer romper', 'flowing maxi dress'],
   christmasOutfit: ['cozy Christmas pajama set', 'stylish Christmas sweater', 'winter puffer jacket and skirt', 'Elegant Winter Gown', 'ugly Christmas sweater outfit', 'elegant holiday party dress', 'festive Santa-inspired outfit'],
   valentinesOutfit: ['romantic cocktail dress', 'elegant red gown', 'cute pink sweater and skirt', 'lacey top and trousers'],
-  chicAutumnOutfit: ['knit_leather_combo'],
-  chicWinterOutfit: ['leather_shearling_combo'],
-  chicStreetStyle: ['plaid_coat_turtleneck', 'camel_coat_trousers'],
+  chicAutumnOutfit: ['knit_leather_combo', 'plaid_wrap_coat_white_pants', 'color_block_cardigan_jeans', 'brown_plaid_skirt_combo', 'beige_sweater_plaid_skirt'],
+  chicWinterOutfit: ['leather_shearling_combo', 'burgundy_coat_cream_dress', 'gray_coat_green_dress', 'parisian_chic_plaid_skirt', 'pink_trench_black_dress', 'pink_coat_houndstooth_skirt', 'camel_coat_beige_pants'],
+  chicStreetStyle: ['plaid_coat_turtleneck', 'camel_coat_trousers', 'poncho_jeans_red_boots', 'green_plaid_coat_black_dress'],
+  businessChicOutfit: ['red_blazer_dress'],
+  elegantProfessionalStyle: [
+      'white_blazer_white_trousers',
+      'brown_blazer_white_dress',
+      'black_blazer_black_trousers',
+      'houndstooth_vest_trousers',
+      'maroon_plaid_skirt_combo'
+  ],
+  luxeChicStyle: [
+      'sheer_blouse_jeans',
+      'burgundy_cape_dress',
+      'printed_turtleneck_skirt',
+      'cream_jacket_black_trousers',
+      'brown_slip_dress_blazer',
+      'pink_fur_jacket_leather_pants',
+      'brown_suede_monochrome',
+      'brown_faux_fur_coat_beige_dress',
+      'beige_fur_coat_snakeskin_boots',
+      'cream_fur_monochrome',
+      'camel_coat_black_dress',
+      'red_coat_white_dress',
+      'camel_coat_leather_pants',
+      'fur_trim_cape',
+      'olive_fur_coat_leather_pants',
+      'fur_vest_leather_pants',
+      'white_cropped_fur_jacket'
+  ],
   freckles: ['none', 'soft freckles', 'sun-kissed freckles', 'a light sprinkle of freckles'],
   jewelry: ['none', 'a delicate gold necklace', 'chunky silver hoop earrings', 'pearl stud earrings', 'layered thin necklaces', 'a statement bracelet', 'dainty rings'],
   sceneDescription: [
@@ -459,7 +489,7 @@ export const COLOR_PALETTES: ColorPalette[] = [
 ];
 
 export const ADVANCED_COORDINATION = {
-  themes: ['glamorous', 'kawaii', 'cyberpunk', 'vintage', 'bohemian', 'gothic', 'sporty', 'winter', 'chicWinter', 'chicStreet', 'autumn', 'chicAutumn', 'summer', 'christmas', 'halloween', 'valentines', 'fantasy', 'planner', 'formal', 'indian'],
+  themes: ['glamorous', 'kawaii', 'cyberpunk', 'vintage', 'bohemian', 'gothic', 'sporty', 'winter', 'chicWinter', 'chicStreet', 'autumn', 'chicAutumn', 'summer', 'christmas', 'halloween', 'valentines', 'fantasy', 'planner', 'formal', 'indian', 'businessChic', 'elegantProfessional', 'luxeChic'],
   perfectCombinations: {
     glamorous: {
       outfitCategory: 'Detailed Outfit',
@@ -589,6 +619,15 @@ export const ADVANCED_COORDINATION = {
       eyeshadowColors: ['shimmering gold', 'warm bronze', 'smoky black', 'emerald green'],
       skinTones: ['golden tan', 'caramel', 'honey brown', 'rich bronze', 'deep brown', 'cocoa'],
       hairStyles: ['long flowing', 'braided crown', 'side swept', 'elegant updo'],
+    },
+    businessChic: {
+      outfitCategory: 'Business Chic Outfit',
+    },
+    elegantProfessional: {
+        outfitCategory: 'Elegant Professional Style',
+    },
+    luxeChic: {
+        outfitCategory: 'Luxe & Chic Style',
     }
   }
 };

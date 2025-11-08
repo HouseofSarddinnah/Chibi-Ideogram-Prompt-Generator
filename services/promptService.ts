@@ -185,6 +185,9 @@ export const buildPrompt = (form: FormData): string => {
         'Themed Costume': { scene: 'a mystical enchanted forest backdrop', lighting: 'an ethereal glow' },
         'Formal Gown': { scene: 'a sparkly dance floor backdrop', lighting: 'dramatic spotlight' },
         'Indian Outfit': { scene: 'an ornate, soft-focus palace interior backdrop', lighting: 'golden hour warmth' },
+        'Business Chic Outfit': { scene: 'a sleek, minimalist office or studio backdrop', lighting: 'soft, professional studio lighting' },
+        'Elegant Professional Style': { scene: 'a modern, minimalist high-rise office with a city view', lighting: 'bright, natural window lighting' },
+        'Luxe & Chic Style': { scene: 'a luxurious, minimalist city apartment with a skyline view', lighting: 'soft, natural afternoon light' },
     };
 
     let finalBackground = form.sceneDescription;
@@ -216,24 +219,76 @@ export const buildPrompt = (form: FormData): string => {
             break;
 
         case 'Chic Autumn Outfit':
-            outfitText = `She wears a modern, chic autumn ensemble in warm, earthy tones. Her top is a cozy, chunky knit turtleneck sweater in light beige, paired with high-waisted, form-fitting faux leather pants in a rich caramel brown with a distinctive tie-front belt. She wears a chunky gold chain necklace over the turtleneck${jewelryText}${extra}.`;
-            propsText = 'She holds a pale blush clutch bag with a large, gold accent.';
+            switch(form.chicAutumnOutfit) {
+                case 'knit_leather_combo':
+                    outfitText = `She wears a modern, chic autumn ensemble in warm, earthy tones. Her top is a cozy, chunky knit turtleneck sweater in light beige, paired with high-waisted, form-fitting faux leather pants in a rich caramel brown with a distinctive tie-front belt. She wears a chunky gold chain necklace over the turtleneck${jewelryText}${extra}.`;
+                    propsText = 'She holds a pale blush clutch bag with a large, gold accent.';
+                    break;
+                case 'plaid_wrap_coat_white_pants':
+                    outfitText = `She wears a stylish autumn outfit featuring a brown, gray, and cream plaid wrap coat tied at the waist, paired with crisp white leggings and knee-high brown suede boots. She wears oversized brown sunglasses${jewelryText}${extra}.`;
+                    break;
+                case 'color_block_cardigan_jeans':
+                    outfitText = `She wears a casual chic autumn outfit. A cozy color-block wrap cardigan in shades of brown, orange, and cream is layered over a simple white halter top, paired with classic dark wash skinny jeans. She wears tall brown suede boots${jewelryText}${extra}.`;
+                    propsText = 'She carries a quilted brown leather handbag with a gold chain strap.';
+                    break;
+                case 'brown_plaid_skirt_combo':
+                    outfitText = `She wears a preppy autumn outfit featuring a rich brown turtleneck sweater and a double-breasted brown coat. This is paired with a high-waisted A-line skirt in a brown, cream, and orange plaid pattern. She wears slouchy brown suede boots${jewelryText}${extra}.`;
+                    propsText = 'She carries a structured brown leather handbag.';
+                    break;
+                case 'beige_sweater_plaid_skirt':
+                    outfitText = `She wears a cozy and chic autumn outfit. A cropped beige turtleneck sweater with balloon sleeves is paired with a high-waisted pencil skirt in a brown, black, and white plaid pattern. She wears black leather knee-high boots and a black flat-brimmed hat${jewelryText}${extra}.`;
+                    propsText = 'She holds a black leather handbag.';
+                    break;
+            }
             break;
 
         case 'Chic Winter Outfit':
-            outfitText = `She wears a contemporary, high-contrast winter ensemble. Her base layer is a sleek, form-fitting solid black bodysuit. The main focus is an oversized, cropped black faux leather jacket with thick white shearling trim, a dramatic lapel, and wide cuffs, worn stylishly off the shoulders${jewelryText}${extra}.`;
-            propsText = 'She carries a black leather shoulder bag with a distinctive curved saddle shape.';
+             switch(form.chicWinterOutfit) {
+                case 'leather_shearling_combo':
+                    outfitText = `She wears a contemporary, high-contrast winter ensemble. Her base layer is a sleek, form-fitting solid black bodysuit. The main focus is an oversized, cropped black faux leather jacket with thick white shearling trim, a dramatic lapel, and wide cuffs, worn stylishly off the shoulders${jewelryText}${extra}.`;
+                    propsText = 'She carries a black leather shoulder bag with a distinctive curved saddle shape.';
+                    break;
+                case 'burgundy_coat_cream_dress':
+                    outfitText = `She wears an elegant winter outfit consisting of a long, cream-colored turtleneck knit dress, accented with a metallic gold belt. A warm burgundy wool coat is draped over her shoulders, complemented by a cozy beige, red, and green plaid scarf${jewelryText}${extra}.`;
+                    break;
+                case 'gray_coat_green_dress':
+                    outfitText = `She wears a sophisticated winter outfit. A long, elegant gray wool coat is layered over a form-fitting dark green ribbed maxi dress with long bell sleeves${jewelryText}${extra}.`;
+                    propsText = 'She carries a matching dark green luxury handbag and wears tall, shiny dark green boots.';
+                    break;
+                case 'parisian_chic_plaid_skirt':
+                    outfitText = `She wears a chic Parisian-inspired winter outfit. A classic black coat is layered over a black long-sleeve turtleneck top, paired with a black and white plaid mini skirt. The look is accented with bold red accessories: a red beret, knee-high red boots, and a red handbag${jewelryText}${extra}.`;
+                    break;
+                case 'pink_trench_black_dress':
+                    outfitText = `She wears a stylish winter outfit, pairing a long, black cable-knit turtleneck dress with a vibrant pink double-breasted trench coat, belted at the waist${jewelryText}${extra}.`;
+                    break;
+                case 'pink_coat_houndstooth_skirt':
+                    outfitText = `She wears a chic and feminine winter outfit. It features a long, pink double-breasted wool coat, a simple black short-sleeve turtleneck, and a high-waisted midi pencil skirt in a classic pink and black houndstooth pattern${jewelryText}${extra}.`;
+                    break;
+                case 'camel_coat_beige_pants':
+                    outfitText = `She wears a minimalist and sophisticated winter outfit. A timeless camel-colored wool coat is layered over a black turtleneck sweater and paired with elegant, wide-leg beige trousers${jewelryText}${extra}.`;
+                    propsText = 'She holds a black coffee cup and a black structured handbag.';
+                    break;
+            }
             break;
 
         case 'Chic Street Style':
-            if (form.chicStreetStyle === 'plaid_coat_turtleneck') {
-                outfitText = `She wears a chic street style outfit, featuring a cozy white chunky knit turtleneck sweater layered under a stylish pink and beige plaid coat. She wears a classic beret${jewelryText}${extra}.`;
-                propsText = 'She is holding a festive coffee cup with whipped cream and a candy cane.';
-                finalBackground = 'a bustling winter city street with bokeh lights';
-            } else { // camel_coat_trousers
-                outfitText = `She wears a sophisticated street style outfit, featuring a cream ribbed turtleneck sweater and smart blue-gray trousers, layered under a classic camel overcoat${jewelryText}${extra}.`;
-                propsText = 'She is holding a warm cup of coffee.';
-                finalBackground = 'a stylish European city street in winter';
+            switch(form.chicStreetStyle) {
+                case 'plaid_coat_turtleneck':
+                    outfitText = `She wears a chic street style outfit, featuring a cozy white chunky knit turtleneck sweater layered under a stylish pink and beige plaid coat. She wears a classic beret${jewelryText}${extra}.`;
+                    propsText = 'She is holding a festive coffee cup with whipped cream and a candy cane.';
+                    finalBackground = 'a bustling winter city street with bokeh lights';
+                    break;
+                case 'camel_coat_trousers':
+                    outfitText = `She wears a sophisticated street style outfit, featuring a cream ribbed turtleneck sweater and smart blue-gray trousers, layered under a classic camel overcoat${jewelryText}${extra}.`;
+                    propsText = 'She is holding a warm cup of coffee.';
+                    finalBackground = 'a stylish European city street in winter';
+                    break;
+                case 'poncho_jeans_red_boots':
+                    outfitText = `She wears a bold and stylish street style outfit. A cream and red striped poncho is layered over a simple white long-sleeve top and dark wash high-waisted skinny jeans. The look is completed with a wide-brimmed red hat and striking red thigh-high boots${jewelryText}${extra}.`;
+                    break;
+                case 'green_plaid_coat_black_dress':
+                    outfitText = `She wears a preppy-chic street style outfit. A double-breasted plaid coat in shades of green, blue, and white is layered over a simple black sleeveless mini dress. She wears tall, dark blue suede boots${jewelryText}${extra}.`;
+                    break;
             }
             break;
             
@@ -313,6 +368,103 @@ export const buildPrompt = (form: FormData): string => {
         case 'Indian Outfit':
             outfitText = `She wears a beautiful ${form.indianOutfit}${jewelryText}${extra}.`;
             break;
+            
+        case 'Business Chic Outfit':
+            outfitText = `She wears an elegant and professional short-sleeved, double-breasted blazer dress in a rich burgundy red. The dress features a notched lapel, a pleated skirt, and is accented with sophisticated gold buttons${jewelryText}${extra}.`;
+            propsText = 'She holds a matching burgundy patent leather clutch bag.';
+            break;
+
+        case 'Elegant Professional Style':
+            switch (form.elegantProfessionalStyle) {
+                case 'white_blazer_white_trousers':
+                    outfitText = `She wears an exceptionally chic and monochromatic all-white professional outfit. It consists of a structured white blazer paired with matching high-waisted, wide-leg white trousers. Underneath the blazer, she wears a simple brown form-fitting top, adding a touch of warm contrast${jewelryText}${extra}.`;
+                    propsText = 'She is holding a small, elegant white handbag.';
+                    break;
+                case 'brown_blazer_white_dress':
+                    outfitText = `She wears a sophisticated and elegant professional outfit. The centerpiece is a beautiful sleeveless, strapless white A-line dress with a full skirt. Layered over it is a classic, tailored brown blazer, giving the look a professional yet soft feel${jewelryText}${extra}.`;
+                    propsText = 'She carries a stylish two-tone handbag in brown and white.';
+                    break;
+                case 'black_blazer_black_trousers':
+                    outfitText = `She wears a powerful and chic all-black ensemble. It features a sleek, tailored black blazer paired with matching formal black trousers. A simple black top is worn underneath, creating a sharp, monochromatic silhouette${jewelryText}${extra}.`;
+                    propsText = 'She holds a classic black designer handbag.';
+                    break;
+                case 'houndstooth_vest_trousers':
+                    outfitText = `She wears a trendy yet professional outfit with a classic pattern. The main piece is a stylish, sleeveless V-neck vest in a black and white houndstooth pattern. This is paired with classic, high-waisted black formal trousers${jewelryText}${extra}.`;
+                    propsText = 'She carries a quilted cream-colored handbag with a chain strap.';
+                    break;
+                case 'maroon_plaid_skirt_combo':
+                    outfitText = `She wears a preppy and professional outfit. A short maroon blazer is layered over a beige button-up shirt, paired with a high-waisted skirt in a cream and brown plaid pattern. She wears tall, dark brown leather boots${jewelryText}${extra}.`;
+                    break;
+                default:
+                    outfitText = `She wears an elegant professional outfit${jewelryText}${extra}.`;
+            }
+            break;
+
+        case 'Luxe & Chic Style':
+            switch (form.luxeChicStyle) {
+                case 'sheer_blouse_jeans':
+                    outfitText = `She wears a chic and modern outfit featuring a sheer, belted brown organza blouse with voluminous sleeves, paired with classic high-waisted, straight-leg blue jeans${jewelryText}${extra}.`;
+                    propsText = 'She carries a designer monogram tote bag and holds a laptop.';
+                    break;
+                case 'burgundy_cape_dress':
+                    outfitText = `She wears an incredibly elegant and dramatic floor-length, form-fitting burgundy dress. The dress has a high turtleneck and features a stunning, flowing cape that drapes over her shoulders${jewelryText}${extra}.`;
+                    propsText = 'She holds a small, glittering gold handbag with a structured handle.';
+                    break;
+                case 'printed_turtleneck_skirt':
+                    outfitText = `She wears a sophisticated outfit pairing a sleek black turtleneck top with a striking black and gold chain-link print, with a high-waisted, pleated A-line midi skirt in a rich brown, cinched with a matching belt${jewelryText}${extra}.`;
+                    propsText = 'She holds a classic quilted brown leather handbag with a chain strap.';
+                    break;
+                case 'cream_jacket_black_trousers':
+                    outfitText = `She wears a minimalist and luxurious outfit featuring a black turtleneck and black wide-leg trousers, elegantly layered with a cropped, cream-colored wrap jacket with wide lapels${jewelryText}${extra}.`;
+                    propsText = 'She holds a small, structured white handbag.';
+                    break;
+                case 'brown_slip_dress_blazer':
+                    outfitText = `She wears a timeless and sophisticated ensemble consisting of a simple brown square-neck A-line dress, layered under a classic black tuxedo-style blazer${jewelryText}${extra}.`;
+                    propsText = 'She carries a large, structured brown leather tote bag.';
+                    break;
+                case 'pink_fur_jacket_leather_pants':
+                    outfitText = `She wears a bold and glamorous outfit, featuring a vibrant, hot pink faux fur jacket, a simple black long-sleeve top, and sleek black faux leather leggings${jewelryText}${extra}.`;
+                    break;
+                case 'brown_suede_monochrome':
+                    outfitText = `She wears a luxurious monochromatic brown outfit. It consists of a strapless, knee-length dress in a rich brown suede-like fabric, paired with a matching long duster coat${jewelryText}${extra}.`;
+                    break;
+                case 'brown_faux_fur_coat_beige_dress':
+                    outfitText = `She wears a luxe and cozy outfit, featuring a long, plush brown faux fur coat with a belt, layered over a simple, long-sleeve beige bodycon dress${jewelryText}${extra}.`;
+                    break;
+                case 'beige_fur_coat_snakeskin_boots':
+                    outfitText = `She wears a trendy and luxurious outfit. A glamorous beige-colored faux fur coat is draped over a simple cream-colored ribbed dress, paired with statement-making snakeskin-patterned ankle boots${jewelryText}${extra}.`;
+                    break;
+                case 'cream_fur_monochrome':
+                    outfitText = `She wears a dreamy, all-white winter wonderland outfit. A cream-colored jacket with plush faux fur trim on the hood, cuffs, and hem is tied with a bow at the waist. It's paired with a form-fitting ribbed halter-neck dress and matching furry cream-colored boots${jewelryText}${extra}.`;
+                    break;
+                case 'camel_coat_black_dress':
+                    outfitText = `She wears a timeless and sophisticated outfit, pairing a classic, long camel-colored wool coat with an elegant black long-sleeve midi dress. She wears black gloves${jewelryText}${extra}.`;
+                    propsText = 'She carries a chic beige handbag.';
+                    break;
+                case 'red_coat_white_dress':
+                    outfitText = `She wears a stunning and elegant outfit, featuring a long, vibrant red double-breasted wool coat, layered over a pristine white strapless dress${jewelryText}${extra}.`;
+                    propsText = 'She wears classic red stiletto heels and carries a red handbag with a silk scarf tied to it.';
+                    break;
+                case 'camel_coat_leather_pants':
+                    outfitText = `She wears a high-fashion, chic outfit. A classic camel-colored wool coat is belted at the waist and paired with a brown ribbed turtleneck sweater and straight-leg brown leather trousers. She wears a designer logo scarf${jewelryText}${extra}.`;
+                    propsText = 'She carries a tiny, structured brown handbag.';
+                    break;
+                case 'fur_trim_cape':
+                    outfitText = `She wears an exceptionally luxurious camel-colored cashmere cape with voluminous, plush light brown fox fur trim along the opening and cuffs${jewelryText}${extra}.`;
+                    break;
+                case 'olive_fur_coat_leather_pants':
+                    outfitText = `She wears an edgy and chic outfit. A long, olive green faux fur coat is belted at the waist and layered over a cropped white cable-knit sweater with ruffled sleeves, paired with sleek black faux leather leggings${jewelryText}${extra}.`;
+                    break;
+                case 'fur_vest_leather_pants':
+                    outfitText = `She wears a luxe and edgy outfit, featuring a thick, natural-toned fur vest over a simple black long-sleeve top, paired with textured black leather-like skinny pants${jewelryText}${extra}.`;
+                    break;
+                case 'white_cropped_fur_jacket':
+                    outfitText = `She wears a chic and modern winter outfit. A cropped, fluffy white faux fur jacket is paired with a form-fitting, long-sleeve beige ribbed midi dress${jewelryText}${extra}.`;
+                    break;
+                default:
+                    outfitText = `She wears a luxe and chic outfit${jewelryText}${extra}.`;
+            }
+            break;
 
         case 'Themed Costume':
             if (form.themedCostume === 'Ice Princess Gown') {
@@ -333,7 +485,12 @@ export const buildPrompt = (form: FormData): string => {
             } else {
                 const top = form.topDescription === 'none' ? 'a stylish top' : form.topDescription;
                 const bottom = form.bottomDescription === 'none' ? 'fashionable bottoms' : form.bottomDescription;
-                outfitText = `She wears a ${colorPrefix}${top} and ${bottom}${jewelryText}${extra}.`;
+                
+                if (form.topDescription !== 'none') {
+                   outfitText = `She wears ${colorPrefix}${top} and ${bottom}${jewelryText}${extra}.`;
+                } else {
+                   outfitText = `She wears a ${colorPrefix}${top} and ${bottom}${jewelryText}${extra}.`;
+                }
             }
             break;
     }

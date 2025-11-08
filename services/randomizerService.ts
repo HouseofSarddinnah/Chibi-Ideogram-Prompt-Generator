@@ -86,7 +86,7 @@ export const getRandomizedForm = (): FormData => {
             newForm.layeredHat = randomFrom(nonNone(WORD_BANK.layeredHat)) || 'knitted beanie';
         } else if (selectedThemeKey === 'chicWinter') {
             newForm.outfitCategory = 'Chic Winter Outfit';
-            newForm.chicWinterOutfit = 'leather_shearling_combo';
+            newForm.chicWinterOutfit = randomFrom(nonNone(WORD_BANK.chicWinterOutfit)) || 'leather_shearling_combo';
             const monoPalette = COLOR_PALETTES.find(p => p.name === 'Monochrome Chic') || palette;
             newForm.hairColor = randomFrom(['platinum blonde', 'golden blonde', 'white blonde']);
             newForm.hairDescription = randomFrom(['long flowing', 'beach waves', 'side swept']);
@@ -100,12 +100,43 @@ export const getRandomizedForm = (): FormData => {
                 newForm.headwear = 'classic beret';
             }
         } else if (selectedThemeKey === 'chicAutumn') {
-            newForm.chicAutumnOutfit = 'knit_leather_combo';
+            newForm.outfitCategory = 'Chic Autumn Outfit';
+            newForm.chicAutumnOutfit = randomFrom(nonNone(WORD_BANK.chicAutumnOutfit)) || 'knit_leather_combo';
             const autumnPalette = COLOR_PALETTES.find(p => p.name === 'Earthy Autumn') || palette;
             newForm.hairColor = randomFrom(autumnPalette.hair);
             newForm.eyeColor = randomFrom(autumnPalette.eyes);
             newForm.lipColor = randomFrom(autumnPalette.lips);
             newForm.eyeshadowColors = randomFrom(autumnPalette.eyeshadow);
+        } else if (selectedThemeKey === 'businessChic') {
+            newForm.outfitCategory = 'Business Chic Outfit';
+            newForm.businessChicOutfit = randomFrom(nonNone(WORD_BANK.businessChicOutfit)) || 'red_blazer_dress';
+            const monoPalette = COLOR_PALETTES.find(p => p.name === 'Monochrome Chic') || palette;
+            newForm.hairColor = randomFrom(['jet black', 'dark brown', 'chocolate brown']);
+            newForm.hairDescription = randomFrom(['sleek bob', 'high ponytail', 'long flowing', 'side swept']);
+            newForm.eyeColor = randomFrom(monoPalette.eyes);
+            newForm.lipColor = randomFrom(['classic red', 'nude beige', 'deep plum']);
+            newForm.eyeshadowColors = randomFrom(monoPalette.eyeshadow);
+        } else if (selectedThemeKey === 'elegantProfessional') {
+            newForm.outfitCategory = 'Elegant Professional Style';
+            newForm.elegantProfessionalStyle = randomFrom(nonNone(WORD_BANK.elegantProfessionalStyle)) || 'white_blazer_white_trousers';
+            const monoPalette = COLOR_PALETTES.find(p => p.name === 'Monochrome Chic') || palette;
+            newForm.hairColor = randomFrom(['jet black', 'dark brown', 'chocolate brown', 'ash blonde', 'platinum blonde']);
+            newForm.hairDescription = randomFrom(['sleek bob', 'high ponytail', 'long flowing', 'side swept', 'messy bun']);
+            newForm.eyeColor = randomFrom(monoPalette.eyes);
+            newForm.lipColor = randomFrom(['classic red', 'nude beige', 'deep plum', 'rose pink']);
+            newForm.eyeshadowColors = randomFrom(['soft brown', 'smoky black', 'champagne gold']);
+        } else if (selectedThemeKey === 'luxeChic') {
+            newForm.outfitCategory = 'Luxe & Chic Style';
+            newForm.luxeChicStyle = randomFrom(nonNone(WORD_BANK.luxeChicStyle)) || 'sheer_blouse_jeans';
+            const palette = randomFrom([
+                COLOR_PALETTES.find(p => p.name === 'Monochrome Chic'),
+                COLOR_PALETTES.find(p => p.name === 'Earthy Autumn')
+            ].filter(p => p) as any[]);
+            newForm.hairColor = randomFrom(palette.hair);
+            newForm.eyeColor = randomFrom(palette.eyes);
+            newForm.lipColor = randomFrom(palette.lips);
+            newForm.eyeshadowColors = randomFrom(palette.eyeshadow);
+            newForm.hairDescription = randomFrom(['sleek bob', 'long flowing', 'side swept', 'elegant updo']);
         } else if (selectedThemeKey === 'summer') {
             newForm.summerOutfit = randomFrom(nonNone(WORD_BANK.summerOutfit)) || 'boho chic sundress';
         } else if (selectedThemeKey === 'christmas') {

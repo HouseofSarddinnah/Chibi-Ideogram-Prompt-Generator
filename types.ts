@@ -1,4 +1,3 @@
-
 // Fix: Removed circular import of FormData from './types' which was causing a name collision.
 export interface FormData {
   outfitCategory: string;
@@ -40,6 +39,9 @@ export interface FormData {
   chicAutumnOutfit: string;
   chicWinterOutfit: string;
   chicStreetStyle: string;
+  businessChicOutfit: string;
+  elegantProfessionalStyle: string;
+  luxeChicStyle: string;
   freckles: string;
   jewelry: string;
   extraDescription: string;

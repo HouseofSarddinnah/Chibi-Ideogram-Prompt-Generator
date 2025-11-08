@@ -108,6 +108,9 @@ const App: React.FC = () => {
             chicAutumnOutfit: initialFormData.chicAutumnOutfit,
             chicWinterOutfit: initialFormData.chicWinterOutfit,
             chicStreetStyle: initialFormData.chicStreetStyle,
+            businessChicOutfit: initialFormData.businessChicOutfit,
+            elegantProfessionalStyle: initialFormData.elegantProfessionalStyle,
+            luxeChicStyle: initialFormData.luxeChicStyle,
             plannerCategory: initialFormData.plannerCategory,
             plannerType: initialFormData.plannerType,
             plannerPalette: initialFormData.plannerPalette,
@@ -239,19 +242,37 @@ const App: React.FC = () => {
 
                         {formData.outfitCategory === 'Chic Autumn Outfit' && (
                              <div className="grid grid-cols-1 mt-3">
-                                 <SelectInput label="Autumn Style" id="chicAutumnOutfit" value={formData.chicAutumnOutfit} onChange={handleChange} options={[{value: 'knit_leather_combo', label: 'Knit Sweater & Leather Pants'}]} />
+                                 <SelectInput label="Autumn Style" id="chicAutumnOutfit" value={formData.chicAutumnOutfit} onChange={handleChange} options={toOptions('chicAutumnOutfit')} />
                             </div>
                         )}
 
                         {formData.outfitCategory === 'Chic Winter Outfit' && (
                              <div className="grid grid-cols-1 mt-3">
-                                 <SelectInput label="Winter Style" id="chicWinterOutfit" value={formData.chicWinterOutfit} onChange={handleChange} options={[{value: 'leather_shearling_combo', label: 'Leather & Shearling Jacket'}]} />
+                                 <SelectInput label="Winter Style" id="chicWinterOutfit" value={formData.chicWinterOutfit} onChange={handleChange} options={toOptions('chicWinterOutfit')} />
                             </div>
                         )}
 
                          {formData.outfitCategory === 'Chic Street Style' && (
                              <div className="grid grid-cols-1 mt-3">
                                  <SelectInput label="Street Style" id="chicStreetStyle" value={formData.chicStreetStyle} onChange={handleChange} options={toOptions('chicStreetStyle')} />
+                            </div>
+                        )}
+                        
+                        {formData.outfitCategory === 'Business Chic Outfit' && (
+                             <div className="grid grid-cols-1 mt-3">
+                                 <SelectInput label="Business Style" id="businessChicOutfit" value={formData.businessChicOutfit} onChange={handleChange} options={toOptions('businessChicOutfit')} />
+                            </div>
+                        )}
+
+                        {formData.outfitCategory === 'Elegant Professional Style' && (
+                             <div className="grid grid-cols-1 mt-3">
+                                 <SelectInput label="Professional Style" id="elegantProfessionalStyle" value={formData.elegantProfessionalStyle} onChange={handleChange} options={toOptions('elegantProfessionalStyle')} />
+                            </div>
+                        )}
+
+                        {formData.outfitCategory === 'Luxe & Chic Style' && (
+                             <div className="grid grid-cols-1 mt-3">
+                                 <SelectInput label="Luxe Style" id="luxeChicStyle" value={formData.luxeChicStyle} onChange={handleChange} options={toOptions('luxeChicStyle')} />
                             </div>
                         )}
 
